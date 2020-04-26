@@ -1,0 +1,88 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://game/game.tscn" type="PackedScene" id=1]
+[ext_resource path="res://core/core.gd" type="Script" id=2]
+[ext_resource path="res://ui/main_menu.tscn" type="PackedScene" id=3]
+[ext_resource path="res://ui/settings_menu.tscn" type="PackedScene" id=4]
+[ext_resource path="res://ui/pause_menu.tscn" type="PackedScene" id=5]
+[ext_resource path="res://core/split.png" type="Texture" id=6]
+
+[node name="Core" type="Node2D"]
+pause_mode = 2
+script = ExtResource( 2 )
+
+[node name="LeftSide" type="ViewportContainer" parent="."]
+anchor_bottom = 1.0
+margin_right = 512.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="LeftSide"]
+size = Vector2( 512, 576 )
+own_world = true
+handle_input_locally = false
+render_target_update_mode = 3
+
+[node name="Game" parent="LeftSide/Viewport" instance=ExtResource( 1 )]
+side = "left"
+
+[node name="RightSide" type="ViewportContainer" parent="."]
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 512.0
+margin_right = 390.0
+margin_bottom = 576.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Viewport" type="Viewport" parent="RightSide"]
+size = Vector2( 512, 576 )
+handle_input_locally = false
+disable_3d = true
+usage = 0
+render_target_update_mode = 3
+
+[node name="Game" parent="RightSide/Viewport" instance=ExtResource( 1 )]
+side = "right"
+
+[node name="Divider" type="TextureRect" parent="."]
+visible = false
+margin_left = 507.0
+margin_right = 547.0
+margin_bottom = 576.0
+texture = ExtResource( 6 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PauseMenu" parent="." instance=ExtResource( 5 )]
+visible = false
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 1024, 576 )
+
+[node name="MainMenu" parent="." instance=ExtResource( 3 )]
+margin_right = 1024.0
+margin_bottom = 576.0
+
+[node name="SettingsMenu" parent="." instance=ExtResource( 4 )]
+visible = false
+margin_right = 1024.0
+margin_bottom = 576.0
+[connection signal="paused" from="LeftSide/Viewport/Game" to="." method="_on_Game_paused"]
+[connection signal="scrolled_down" from="LeftSide/Viewport/Game" to="." method="_on_Game_scrolled_down"]
+[connection signal="scrolled_togther" from="LeftSide/Viewport/Game" to="." method="_on_Game_scrolled_togther"]
+[connection signal="scrolled_up" from="LeftSide/Viewport/Game" to="." method="_on_Game_scrolled_up"]
+[connection signal="paused" from="RightSide/Viewport/Game" to="." method="_on_Game_paused"]
+[connection signal="scrolled_down" from="RightSide/Viewport/Game" to="." method="_on_Game_scrolled_down"]
+[connection signal="scrolled_togther" from="RightSide/Viewport/Game" to="." method="_on_Game_scrolled_togther"]
+[connection signal="scrolled_up" from="RightSide/Viewport/Game" to="." method="_on_Game_scrolled_up"]
+[connection signal="continue_game" from="PauseMenu" to="." method="_on_continue_game"]
+[connection signal="go_to_main_menu" from="PauseMenu" to="." method="_return_to_main_menu"]
+[connection signal="go_to_settings" from="PauseMenu" to="." method="_go_to_settings"]
+[connection signal="go_to_settings" from="MainMenu" to="." method="_go_to_settings"]
+[connection signal="play_game" from="MainMenu" to="." method="_on_play_game"]
+[connection signal="go_back" from="SettingsMenu" to="." method="_return_from_settings"]
