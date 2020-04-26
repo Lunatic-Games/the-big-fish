@@ -4,7 +4,17 @@ signal continue_game
 signal go_to_settings
 signal go_to_main_menu
 
-	
+var ignore_pause = true
+
+func _process(delta):
+	if Input.is_action_just_pressed("pause"):
+		if ignore_pause:
+			ignore_pause = false
+		else:
+			_on_ContinueButton_pressed()
+	if Input.is_action_just_pressed("ui_cancel"):
+		_on_ContinueButton_pressed()
+		
 # Unpause game
 func _on_ContinueButton_pressed():
 	visible = false

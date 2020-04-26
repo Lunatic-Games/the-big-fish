@@ -28,6 +28,8 @@ func _return_from_settings():
 	
 # Start outro transition
 func _return_to_main_menu():
+	print("Returning to main menu")
+	get_tree().paused = true
 	$LeftSide/Viewport/Game.reverse_animation()
 	$RightSide/Viewport/Game.reverse_animation()
 
@@ -38,6 +40,7 @@ func _on_continue_game():
 # Show pause menu
 func _on_Game_paused():
 	$PauseMenu.visible = true
+	$PauseMenu.ignore_pause = true
 	$PauseMenu/MarginContainer/VBoxContainer/ContinueButton.grab_focus()
 
 # Split screen

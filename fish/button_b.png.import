@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/forest2.png-05d7ac34ab3f5c11dbc7811dad903a74.stex"
+path="res://.import/button_b.png-0cf52b6efdcfdd9afc4dba8114068dda.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/forest2.png"
-dest_files=[ "res://.import/forest2.png-05d7ac34ab3f5c11dbc7811dad903a74.stex" ]
+source_file="res://fish/button_b.png"
+dest_files=[ "res://.import/button_b.png-0cf52b6efdcfdd9afc4dba8114068dda.stex" ]
 
 [params]
 
