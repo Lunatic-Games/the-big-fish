@@ -1,11 +1,27 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://game/mountains.png" type="Texture" id=1]
 [ext_resource path="res://game/game.gd" type="Script" id=2]
 [ext_resource path="res://fish/fish.tscn" type="PackedScene" id=3]
 [ext_resource path="res://game/forest2.png" type="Texture" id=4]
-[ext_resource path="res://game/water.png" type="Texture" id=5]
+[ext_resource path="res://game/lake.png" type="Texture" id=5]
 [ext_resource path="res://player/player.png" type="Texture" id=6]
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 2048, 1152 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 5 )
+region = Rect2( 2048, 0, 2048, 1152 )
+
+[sub_resource type="SpriteFrames" id=8]
+animations = [ {
+"frames": [ SubResource( 9 ), SubResource( 10 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
 
 [sub_resource type="RectangleShape2D" id=5]
 extents = Vector2( 164.044, 60.4495 )
@@ -249,9 +265,11 @@ texture = ExtResource( 1 )
 position = Vector2( 0, 232.411 )
 texture = ExtResource( 4 )
 
-[node name="Water" type="Sprite" parent="."]
+[node name="Water" type="AnimatedSprite" parent="."]
 position = Vector2( 0, 637.183 )
-texture = ExtResource( 5 )
+frames = SubResource( 8 )
+speed_scale = 0.5
+playing = true
 
 [node name="Player" type="Sprite" parent="Water"]
 position = Vector2( -960, -56.493 )

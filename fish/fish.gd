@@ -1,21 +1,25 @@
 extends Area2D
 
 var velocity = Vector2(-0.75, 0)
-var last_movement = Vector2()
+var last_movement = Vector2()  # Undo last movement on exiting area
 
-const VERTICAL_MAX = 0.45
-const SPEED = 50
+const VERTICAL_MAX = 0.45  # Vertical movement will be in range (-VM, VM)
+const SPEED = 50  # Multiplies velocity
 
+# Start with a random velocity
 func _ready():
 	random_velocity()
 	
+# Move with velocity
 func _physics_process(delta):
 	last_movement = velocity * delta * SPEED
 	position += last_movement
 
+# Change movement
 func _on_DirectionTimer_timeout():
 	random_velocity()
 
+# Turn back
 func _on_Fish_area_exited(area):
 	position -= last_movement
 	
@@ -32,6 +36,7 @@ func _on_Fish_area_exited(area):
 	$Sprite.flip_h = velocity.x > 0
 	$DirectionTimer.call_deferred("start")
 	
+# Get a random vertical and horizontal velocity
 func random_velocity():
 	var vertical = rand_range(-0.45, 0.45)
 	var horizontal = randi() % 2

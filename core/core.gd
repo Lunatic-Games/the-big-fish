@@ -45,11 +45,12 @@ func _on_Game_scrolled_down():
 	pass
 	$Divider.visible = true
 
+# Unsplit screen
+func _on_Game_scrolled_togther():
+	$Divider.visible = false
+
 # Show main menu
 func _on_Game_scrolled_up():
 	$MainMenu/VBoxContainer/PlayButton.grab_focus()
 	$MainMenu.visible = true
 
-# Unsplit screen
-func _on_Game_scrolled_togther():
-	$Divider.visible = false

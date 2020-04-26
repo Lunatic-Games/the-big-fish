@@ -8,6 +8,7 @@ const SLIDER_JUMP = 5
 var music_slider_held = false
 var sfx_slider_held = false
 
+# Handle slider scrolling and keypresses
 func _process(delta):
 	if music_slider_held:
 		if Input.is_action_pressed("ui_right"):
@@ -24,59 +25,64 @@ func _process(delta):
 		visible = false
 		emit_signal("go_back")
 
-
+# Return to previous menu
 func _on_BackButton_pressed():
 	visible = false
 	emit_signal("go_back")
 
-
+# Toggle fullscreen
 func _on_Fullscreen_pressed():
 	var check_box = get_node("VBoxContainer/FullscreenContainer/CheckBox")
 	check_box.pressed = !check_box.pressed
 	OS.window_fullscreen = !OS.window_fullscreen
 
-
+# Toggle screenshake
 func _on_Screenshake_pressed():
 	var check_box = get_node("VBoxContainer/ScreenshakeContainer/CheckBox")
 	check_box.pressed = !check_box.pressed
 	# Need to add screenshake
 
-
+# Highlight label too
 func _on_Music_HSlider_focus_entered():
 	$VBoxContainer/MusicContainer/Label.pressed = true
 
+# Remove label highlight and reset holding
 func _on_Music_HSlider_focus_exited():
 	$VBoxContainer/MusicContainer/Label.pressed = false
 	$VBoxContainer/MusicContainer/HoldTimer.stop()
 	music_slider_held = false
 
+# Highlight label too
 func _on_SFX_HSlider_focus_entered():
 	$VBoxContainer/SFXContainer/Label.pressed = true
 
+# Remove label highlight and reset holding
 func _on_SFX_HSlider_focus_exited():
 	$VBoxContainer/SFXContainer/Label.pressed = false
 	$VBoxContainer/SFXContainer/HoldTimer.stop()
 	sfx_slider_held = false
 
+# Handle sliding for music bar
 func _on_Music_HSlider_gui_input(_event):
 	var timer = get_node("VBoxContainer/MusicContainer/HoldTimer")
 	var slider = get_node("VBoxContainer/MusicContainer/HSlider")
 	handle_slider_logic(timer, slider, "music_slider_held")
 
-
+# Count as holding after timeout
 func _on_Music_HoldTimer_timeout():
 	music_slider_held = true
 
-
+# Handle sliding for SFX bar
 func _on_SFX_HSlider_gui_input(_event):
 	var timer = get_node("VBoxContainer/SFXContainer/HoldTimer")
 	var slider = get_node("VBoxContainer/SFXContainer/HSlider")
 	handle_slider_logic(timer, slider, "sfx_slider_held")
 
+# Count as holding after timeout
 func _on_SFX_HoldTimer_timeout():
 	sfx_slider_held = true
 	
-
+# Do single jumps or count as holding after set time
 func handle_slider_logic(timer, slider, toggle_name):
 	if Input.is_action_just_pressed("ui_right") and timer.is_stopped():
 		timer.start()
