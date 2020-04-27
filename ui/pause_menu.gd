@@ -7,6 +7,8 @@ signal go_to_main_menu
 var ignore_pause = true
 
 func _process(delta):
+	if !visible:
+		return
 	if Input.is_action_just_pressed("pause"):
 		if ignore_pause:
 			ignore_pause = false

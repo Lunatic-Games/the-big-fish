@@ -1,308 +1,88 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://game/mountains.png" type="Texture" id=1]
 [ext_resource path="res://game/game.gd" type="Script" id=2]
+[ext_resource path="res://player/player.tscn" type="PackedScene" id=3]
 [ext_resource path="res://game/forest.png" type="Texture" id=4]
 [ext_resource path="res://game/lake.png" type="Texture" id=5]
-[ext_resource path="res://player/player.png" type="Texture" id=6]
 
-[sub_resource type="AtlasTexture" id=9]
+[sub_resource type="AtlasTexture" id=1]
 atlas = ExtResource( 5 )
 region = Rect2( 0, 0, 2048, 1152 )
 
-[sub_resource type="AtlasTexture" id=10]
-atlas = ExtResource( 5 )
-region = Rect2( 2048, 0, 2048, 1152 )
-
-[sub_resource type="SpriteFrames" id=8]
+[sub_resource type="SpriteFrames" id=3]
 animations = [ {
-"frames": [ SubResource( 9 ), SubResource( 10 ) ],
+"frames": [ SubResource( 1 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
 } ]
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=4]
 extents = Vector2( 164.044, 60.4495 )
 
-[sub_resource type="StyleBoxEmpty" id=11]
-
-[sub_resource type="Animation" id=1]
-resource_name = "left_scroll_away"
-length = 2.0
-tracks/0/type = "method"
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"values": [ {
-"args": [  ],
-"method": "scrolled_togther"
-}, {
-"args": [  ],
-"method": "scrolled_away"
-} ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Camera2D:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( -256, 434 ), Vector2( -512, 434 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("Water:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 0, 522 ), Vector2( 254, 522 ) ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("Forest:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0, 2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 0, 180 ), Vector2( 128, 180 ) ]
-}
-
-[sub_resource type="Animation" id=2]
-resource_name = "left_scroll_down"
-length = 3.0
-tracks/0/type = "method"
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"values": [ {
-"args": [  ],
-"method": "scrolled_to_top"
-}, {
-"args": [  ],
-"method": "scrolled_to_bottom"
-} ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Camera2D:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( -256, -144 ), Vector2( -256, 434 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("Forest:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 0, 232.411 ), Vector2( 0, 180 ) ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("Water:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0, 3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 0, 637.183 ), Vector2( 0, 522 ) ]
-}
-
-[sub_resource type="Animation" id=3]
-resource_name = "right_scroll_away"
-length = 2.0
-tracks/0/type = "method"
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"values": [ {
-"args": [  ],
-"method": "scrolled_togther"
-}, {
-"args": [  ],
-"method": "scrolled_away"
-} ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Forest:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 0, 180 ), Vector2( -128, 180 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("Water:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 0, 522 ), Vector2( -256, 522 ) ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("Camera2D:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0, 2 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 256, 434 ), Vector2( 512, 434 ) ]
-}
-
-[sub_resource type="Animation" id=4]
-resource_name = "right_scroll_down"
-length = 3.0
-tracks/0/type = "method"
-tracks/0/path = NodePath(".")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"values": [ {
-"args": [  ],
-"method": "scrolled_to_top"
-}, {
-"args": [  ],
-"method": "scrolled_to_bottom"
-} ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("Camera2D:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 256, -144 ), Vector2( 256, 434 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("Water:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 0, 637.183 ), Vector2( 0, 522 ) ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("Forest:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0, 3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 0, 232.411 ), Vector2( 0, 180 ) ]
-}
+[sub_resource type="StyleBoxEmpty" id=5]
 
 [node name="Game" type="Node2D"]
 pause_mode = 1
 script = ExtResource( 2 )
 
-[node name="Mountains" type="Sprite" parent="."]
+[node name="MountainsLeft" type="Sprite" parent="."]
+position = Vector2( -384, -18 )
 texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 768, 964 )
 
-[node name="Forest" type="Sprite" parent="."]
-position = Vector2( -64, 180 )
+[node name="MountainsRight" type="Sprite" parent="."]
+position = Vector2( 384, -18 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 768, 0, 768, 964 )
+
+[node name="ForestLeft" type="Sprite" parent="."]
+position = Vector2( -446.33, 200 )
 texture = ExtResource( 4 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 896, 1008 )
+
+[node name="ForestRight" type="Sprite" parent="."]
+position = Vector2( 449.67, 200 )
+texture = ExtResource( 4 )
+region_enabled = true
+region_rect = Rect2( 896, 0, 896, 1008 )
 
 [node name="Water" type="AnimatedSprite" parent="."]
-pause_mode = 1
-position = Vector2( -128, 522 )
-frames = SubResource( 8 )
-frame = 1
-speed_scale = 0.5
+position = Vector2( 0, 600 )
+frames = SubResource( 3 )
+speed_scale = 0.25
 playing = true
 
 [node name="LeftSide" type="Node2D" parent="Water"]
 
-[node name="Player" type="Sprite" parent="Water/LeftSide"]
-position = Vector2( -960, -56.493 )
-texture = ExtResource( 6 )
-region_enabled = true
-region_rect = Rect2( 0, 0, 128, 128 )
+[node name="Player" parent="Water/LeftSide" instance=ExtResource( 3 )]
+position = Vector2( -958.403, 41.5307 )
 
 [node name="FishArea" type="Area2D" parent="Water/LeftSide" groups=[
 "fish_area",
 ]]
 pause_mode = 1
-position = Vector2( -732.33, 124 )
+position = Vector2( -732.33, 180 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Water/LeftSide/FishArea"]
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="SpawnPosition" type="Position2D" parent="Water/LeftSide/FishArea"]
-position = Vector2( -89.3005, 30.8089 )
+position = Vector2( -89.3, 30 )
 
 [node name="CastBar" type="ProgressBar" parent="Water/LeftSide"]
 margin_left = -930.0
 margin_top = -14.0
 margin_right = -530.0
 rect_min_size = Vector2( 400, 0 )
-custom_styles/bg = SubResource( 11 )
+custom_styles/bg = SubResource( 5 )
 percent_visible = false
 __meta__ = {
 "_edit_use_anchors_": false
@@ -310,47 +90,33 @@ __meta__ = {
 
 [node name="RightSide" type="Node2D" parent="Water"]
 
-[node name="Player" type="Sprite" parent="Water/RightSide"]
-position = Vector2( 960, -23.684 )
-texture = ExtResource( 6 )
-flip_h = true
-region_enabled = true
-region_rect = Rect2( 0, 0, 128, 128 )
+[node name="Player" parent="Water/RightSide" instance=ExtResource( 3 )]
+position = Vector2( 960.194, 40.8427 )
+scale = Vector2( -1, 1 )
+side = "right"
 
 [node name="FishArea" type="Area2D" parent="Water/RightSide" groups=[
 "fish_area",
 ]]
 pause_mode = 1
-position = Vector2( 724.897, 124 )
+position = Vector2( 729.142, 180 )
 __meta__ = {
 "_edit_group_": true
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Water/RightSide/FishArea"]
-shape = SubResource( 5 )
+shape = SubResource( 4 )
 
 [node name="SpawnPosition" type="Position2D" parent="Water/RightSide/FishArea"]
-position = Vector2( 6.70905, 29.9723 )
+position = Vector2( 6.709, 30 )
 
 [node name="CastBar" type="ProgressBar" parent="Water/RightSide"]
 margin_left = -930.0
 margin_top = -14.0
 margin_right = -530.0
 rect_min_size = Vector2( 400, 0 )
-custom_styles/bg = SubResource( 11 )
+custom_styles/bg = SubResource( 5 )
 percent_visible = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
-
-[node name="Camera2D" type="Camera2D" parent="."]
-pause_mode = 2
-position = Vector2( 384, 434 )
-current = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-pause_mode = 2
-anims/left_scroll_away = SubResource( 1 )
-anims/left_scroll_down = SubResource( 2 )
-anims/right_scroll_away = SubResource( 3 )
-anims/right_scroll_down = SubResource( 4 )

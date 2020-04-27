@@ -1,16 +1,26 @@
 extends Node2D
 
+var returning_to_main_menu = false
 
 # Begin at main menu
 func _ready():
 	get_tree().paused = true
 	$MainMenu/VBoxContainer/PlayButton.grab_focus()
+	$RightSide/Viewport.world_2d = $LeftSide/Viewport.world_2d
 	#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+func _process(delta):
+	if $AnimationPlayer.current_animation == "intro":
+		if Input.is_action_just_pressed("ui_accept"):
+			if $AnimationPlayer.playback_speed > 0:
+				$AnimationPlayer.playback_speed = 8
+			else:
+				$AnimationPlayer.playback_speed = -8
+				
 
 # Start intro transition
 func _on_play_game():
-	$LeftSide/Viewport/Game/AnimationPlayer.play("left_scroll_down")
-	$RightSide/Viewport/Game/AnimationPlayer.play("right_scroll_down")
+	$AnimationPlayer.play("intro", 0, 1)
 
 # Show settings
 func _go_to_settings():
@@ -28,10 +38,9 @@ func _return_from_settings():
 	
 # Start outro transition
 func _return_to_main_menu():
-	print("Returning to main menu")
+	returning_to_main_menu = true
 	get_tree().paused = true
-	$LeftSide/Viewport/Game.reverse_animation()
-	$RightSide/Viewport/Game.reverse_animation()
+	$AnimationPlayer.play("intro", 0, -2, true)
 
 # Game has resumed
 func _on_continue_game():
@@ -43,17 +52,16 @@ func _on_Game_paused():
 	$PauseMenu.ignore_pause = true
 	$PauseMenu/MarginContainer/VBoxContainer/ContinueButton.grab_focus()
 
-# Split screen
-func _on_Game_scrolled_down():
-	pass
-	$Divider.visible = true
-
-# Unsplit screen
-func _on_Game_scrolled_togther():
-	$Divider.visible = false
-
-# Show main menu
-func _on_Game_scrolled_up():
-	$MainMenu/VBoxContainer/PlayButton.grab_focus()
-	$MainMenu.visible = true
-
+# Show mainmenu when doing outro
+func intro_start():
+	if returning_to_main_menu:
+		returning_to_main_menu = false
+		$MainMenu.visible = true
+		$MainMenu/VBoxContainer/PlayButton.grab_focus()
+	$AnimationPlayer.playback_speed = 1
+	
+# Begin the game
+func intro_end():
+	if not returning_to_main_menu:
+		$LeftSide/Viewport/Game.start()
+	$AnimationPlayer.playback_speed = 1

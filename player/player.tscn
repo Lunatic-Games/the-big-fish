@@ -1,0 +1,299 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://player/player.png" type="Texture" id=1]
+[ext_resource path="res://player/player.gd" type="Script" id=2]
+[ext_resource path="res://player/bobber.png" type="Texture" id=3]
+[ext_resource path="res://hook/hook.tscn" type="PackedScene" id=4]
+
+[sub_resource type="Animation" id=3]
+resource_name = "cast"
+length = 0.4
+step = 0.05
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 384, 0, 128, 128 ), Rect2( 512, 0, 128, 128 ), Rect2( 640, 0, 128, 128 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:casting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:powering_cast")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/3/type = "method"
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "cast_line"
+} ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("FishingLine:points")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = false
+tracks/4/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ PoolVector2Array( 63.1245, -27.7228, 66.8307, 21.8492 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Bobber:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Vector2( 67.2163, 29.5003 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Bobber:rotation_degrees")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ -6.6 ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("RodTip:position")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 0.2, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 64.3973, -28.2607 ), Vector2( 59.1356, -18.3827 ), Vector2( 48.7396, -13.0055 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath(".:attach_line")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
+
+[sub_resource type="Animation" id=1]
+resource_name = "cast_start"
+length = 0.35
+step = 0.025
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.25 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 128, 128 ), Rect2( 128, 0, 128, 128 ), Rect2( 256, 0, 128, 128 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:powering_cast")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.35 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("FishingLine:points")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.1, 0.25 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ PoolVector2Array( 48.3458, -10.2988, 47.791, 21.0462 ), PoolVector2Array( 19.3582, 16.6288, 34.8878, 32.4819 ), PoolVector2Array( -46.3191, 18.8935, -78.9959, 36.0407 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Bobber:texture")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0.1 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 3 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Bobber:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 0.1, 0.25 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 47.7581, 29.037 ), Vector2( 38.6059, 39.8948 ), Vector2( -85.6308, 41.5123 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Bobber:rotation_degrees")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 0.1, 0.25 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0.0, -26.4, 55.9 ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("RodTip:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 0.1, 0.25 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 48.2655, -11.4119 ), Vector2( 19.2088, 17.2574 ), Vector2( -45.8782, 18.6133 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath(".:attach_line")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("Hook:position")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 0.1, 0.25 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 47.9476, 40.571 ), Vector2( 44.5219, 49.5307 ), Vector2( -94.6165, 48.4766 ) ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("Hook:rotation_degrees")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 0.1, 0.25 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ 0.0, -30.6157, 53.6225 ]
+}
+
+[sub_resource type="Animation" id=2]
+resource_name = "idle"
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 128, 128 ) ]
+}
+
+[node name="Player" type="Sprite"]
+position = Vector2( 502.437, 301.814 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 128, 128 )
+script = ExtResource( 2 )
+side = "left"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/cast = SubResource( 3 )
+anims/cast_start = SubResource( 1 )
+anims/idle = SubResource( 2 )
+
+[node name="Bobber" type="Sprite" parent="."]
+position = Vector2( 47.7581, 29.037 )
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 3 )
+
+[node name="FishingLine" type="Line2D" parent="."]
+points = PoolVector2Array( 48.3458, -10.2988, 47.791, 21.0462 )
+width = 1.0
+default_color = Color( 1, 1, 1, 1 )
+
+[node name="RodTip" type="Position2D" parent="."]
+position = Vector2( 48.2655, -11.4119 )
+
+[node name="BobberStart" type="Position2D" parent="."]
+position = Vector2( 93.9335, 66.5895 )
+
+[node name="Hook" parent="." instance=ExtResource( 4 )]
+position = Vector2( 47.9476, 40.571 )
+
+[node name="HookLine" type="Line2D" parent="."]
+visible = false
+points = PoolVector2Array( 47.7254, 35.9609, 47.4176, 38.577 )
+width = 1.0
+default_color = Color( 1, 1, 1, 0.239216 )

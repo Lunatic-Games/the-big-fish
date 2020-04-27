@@ -2,15 +2,15 @@
 
 importer="texture"
 type="StreamTexture"
-path="res://.import/water.png-54a3bce3a38d7d67705eeedb64cd7154.stex"
+path="res://.import/bobber.png-f2956987c9330a624cdbb786cc3442d7.stex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://game/water.png"
-dest_files=[ "res://.import/water.png-54a3bce3a38d7d67705eeedb64cd7154.stex" ]
+source_file="res://player/bobber.png"
+dest_files=[ "res://.import/bobber.png-f2956987c9330a624cdbb786cc3442d7.stex" ]
 
 [params]
 

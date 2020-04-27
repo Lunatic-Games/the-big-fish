@@ -76,22 +76,22 @@ autostart = true
 
 [node name="AButton" type="Sprite" parent="."]
 visible = false
-position = Vector2( 0, -22 )
+position = Vector2( 0, -32 )
 texture = ExtResource( 3 )
 
 [node name="BButton" type="Sprite" parent="."]
 visible = false
-position = Vector2( 0, -22 )
+position = Vector2( 0, -32 )
 texture = ExtResource( 5 )
 
 [node name="XButton" type="Sprite" parent="."]
 visible = false
-position = Vector2( 0, -22 )
+position = Vector2( 0, -32 )
 texture = ExtResource( 6 )
 
 [node name="YButton" type="Sprite" parent="."]
 visible = false
-position = Vector2( 0, -22 )
+position = Vector2( 0, -32 )
 texture = ExtResource( 4 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
