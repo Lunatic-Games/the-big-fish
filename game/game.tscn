@@ -1,0 +1,122 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://game/mountains.png" type="Texture" id=1]
+[ext_resource path="res://game/game.gd" type="Script" id=2]
+[ext_resource path="res://player/player.tscn" type="PackedScene" id=3]
+[ext_resource path="res://game/forest.png" type="Texture" id=4]
+[ext_resource path="res://game/lake.png" type="Texture" id=5]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 2048, 1152 )
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ SubResource( 1 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 164.044, 60.4495 )
+
+[sub_resource type="StyleBoxEmpty" id=4]
+
+[node name="Game" type="Node2D"]
+pause_mode = 1
+script = ExtResource( 2 )
+
+[node name="MountainsLeft" type="Sprite" parent="."]
+position = Vector2( -384, -18 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 768, 964 )
+
+[node name="MountainsRight" type="Sprite" parent="."]
+position = Vector2( 384, -18 )
+texture = ExtResource( 1 )
+region_enabled = true
+region_rect = Rect2( 768, 0, 768, 964 )
+
+[node name="ForestLeft" type="Sprite" parent="."]
+position = Vector2( -446.33, 200 )
+texture = ExtResource( 4 )
+region_enabled = true
+region_rect = Rect2( 0, 0, 896, 1008 )
+
+[node name="ForestRight" type="Sprite" parent="."]
+position = Vector2( 449.67, 200 )
+texture = ExtResource( 4 )
+region_enabled = true
+region_rect = Rect2( 896, 0, 896, 1008 )
+
+[node name="Water" type="AnimatedSprite" parent="."]
+position = Vector2( 0, 600 )
+frames = SubResource( 2 )
+speed_scale = 0.25
+playing = true
+
+[node name="LeftSide" type="Node2D" parent="Water"]
+
+[node name="Player" parent="Water/LeftSide" instance=ExtResource( 3 )]
+position = Vector2( -958.403, 41.5307 )
+
+[node name="FishArea" type="Area2D" parent="Water/LeftSide" groups=[
+"fish_area",
+]]
+pause_mode = 1
+position = Vector2( -700, 200 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Water/LeftSide/FishArea"]
+shape = SubResource( 3 )
+
+[node name="SpawnPosition" type="Position2D" parent="Water/LeftSide/FishArea"]
+position = Vector2( -89.3, 30 )
+
+[node name="CastBar" type="ProgressBar" parent="Water/LeftSide"]
+margin_left = -930.0
+margin_top = -14.0
+margin_right = -530.0
+rect_min_size = Vector2( 400, 0 )
+custom_styles/bg = SubResource( 4 )
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RightSide" type="Node2D" parent="Water"]
+
+[node name="Player" parent="Water/RightSide" instance=ExtResource( 3 )]
+position = Vector2( 960.194, 40.8427 )
+scale = Vector2( -1, 1 )
+side = "right"
+
+[node name="FishArea" type="Area2D" parent="Water/RightSide" groups=[
+"fish_area",
+]]
+pause_mode = 1
+position = Vector2( 700, 200 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Water/RightSide/FishArea"]
+shape = SubResource( 3 )
+
+[node name="SpawnPosition" type="Position2D" parent="Water/RightSide/FishArea"]
+position = Vector2( 6.709, 30 )
+
+[node name="CastBar" type="ProgressBar" parent="Water/RightSide"]
+margin_left = -930.0
+margin_top = -14.0
+margin_right = -530.0
+rect_min_size = Vector2( 400, 0 )
+custom_styles/bg = SubResource( 4 )
+percent_visible = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
