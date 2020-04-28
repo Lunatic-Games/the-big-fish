@@ -64,10 +64,12 @@ __meta__ = {
 }
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+modulate = Color( 0.941176, 0.941176, 0.941176, 1 )
+show_behind_parent = true
 shape = SubResource( 1 )
 
 [node name="Sprite" type="Sprite" parent="."]
-modulate = Color( 1, 1, 1, 0 )
+modulate = Color( 1, 1, 1, 0.588235 )
 texture = ExtResource( 1 )
 
 [node name="DirectionTimer" type="Timer" parent="."]
@@ -98,6 +100,4 @@ texture = ExtResource( 4 )
 autoplay = "fade_in"
 anims/fade_in = SubResource( 2 )
 anims/fade_out = SubResource( 3 )
-[connection signal="area_entered" from="." to="." method="_on_Fish_area_entered"]
-[connection signal="area_exited" from="." to="." method="_on_Fish_area_exited"]
 [connection signal="timeout" from="DirectionTimer" to="." method="_on_DirectionTimer_timeout"]

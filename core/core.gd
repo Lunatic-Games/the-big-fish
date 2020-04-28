@@ -9,7 +9,7 @@ func _ready():
 	$RightSide/Viewport.world_2d = $LeftSide/Viewport.world_2d
 	#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
-func _process(delta):
+func _process(_delta):
 	if $AnimationPlayer.current_animation == "intro":
 		if Input.is_action_just_pressed("ui_accept"):
 			if $AnimationPlayer.playback_speed > 0:
@@ -58,6 +58,7 @@ func intro_start():
 		returning_to_main_menu = false
 		$MainMenu.visible = true
 		$MainMenu/VBoxContainer/PlayButton.grab_focus()
+		$LeftSide/Viewport/Game.reset()
 	$AnimationPlayer.playback_speed = 1
 	
 # Begin the game
