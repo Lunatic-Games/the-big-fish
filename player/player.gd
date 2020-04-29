@@ -22,6 +22,7 @@ func _ready():
 		device_id = 0
 	elif side == "right":
 		device_id = 1
+		$AnimationPlayer.advance(1.5)
 	
 func _physics_process(delta):
 	if idle and Input.is_action_just_pressed("cast_" + side):
@@ -29,6 +30,7 @@ func _physics_process(delta):
 		
 	if powering_cast and !Input.is_action_pressed("cast_" + side):
 		$AnimationPlayer.play("cast")
+		$AnimationPlayer.queue("idle_fishing")
 		
 	if powering_cast:
 		increase_cast_distance(delta)
@@ -36,6 +38,7 @@ func _physics_process(delta):
 	if fish_on_line:
 		move_bobber(delta * BOBBER_PULL)
 		handle_reeling(delta)
+		give_fish_inputs()
 		
 	if line_cast:
 		track_line()
@@ -61,12 +64,9 @@ func track_line():
 		
 
 func handle_reeling(delta):
-	var horiz = Input.get_joy_axis(device_id, JOY_AXIS_0)
-	if horiz == 0:
-		horiz = 0.0001
-	var vert = Input.get_joy_axis(device_id, JOY_AXIS_1)
-	if abs(horiz) > AXIS_THRESHOLD or abs(vert) > AXIS_THRESHOLD:
-		var angle = atan2(vert, horiz)
+	var joystick_axi = get_joystick_axi()
+	if abs(joystick_axi.x) > AXIS_THRESHOLD or abs(joystick_axi.y) > AXIS_THRESHOLD:
+		var angle = atan2(joystick_axi.y, joystick_axi.x)
 		if last_reel_rot == null or (last_reel_rot < -1 and angle > 1):
 			pass
 		elif angle > last_reel_rot:
@@ -102,7 +102,39 @@ func _on_fish_hooked(_fish):
 	
 func _on_CatchArea_entered(area):
 	if area.is_in_group("fish"):
+		$FishShadow.frames = area.get_node("ShadowSprite").frames
+		$FishShadow.offset.x = -area.TEXTURE_SIZE.x / 2
+		$CaughtFish.frames = area.get_node("FishSprite").frames
+		$CaughtFish.offset.x = area.get_node("FishSprite").offset.x
 		area.catch()
 		fish_on_line = null
 		$Hook.hooked_fish = null
-		$AnimationPlayer.play("idle")
+		$Hook.in_water = false
+		line_cast = false
+		$AnimationPlayer.play("catch")
+		$AnimationPlayer.queue("idle")
+		
+func give_fish_inputs():
+	var joystick_axi = get_joystick_axi()
+	if abs(joystick_axi.x) < AXIS_THRESHOLD and abs(joystick_axi.y) < AXIS_THRESHOLD:
+		return
+	var angle = get_joystick_axi().angle()
+	if Input.is_action_just_pressed("a_button_" + side):
+		fish_on_line.test_combination("AButton", angle)
+	if Input.is_action_just_pressed("b_button_" + side):
+		fish_on_line.test_combination("BButton", angle)
+	if Input.is_action_just_pressed("x_button_" + side):
+		fish_on_line.test_combination("XButton", angle)
+	if Input.is_action_just_pressed("y_button_" + side):
+		fish_on_line.test_combination("YButton", angle)
+		
+func get_joystick_axi():
+	var horiz = Input.get_joy_axis(device_id, JOY_AXIS_0)
+	if horiz == 0:
+		horiz = 0.0001
+	var vert = Input.get_joy_axis(device_id, JOY_AXIS_1)
+	return Vector2(horiz, vert)
+
+
+func _on_SplashAnimation_finished():
+	$SplashAnimation.visible = false

@@ -1,10 +1,15 @@
-[gd_scene load_steps=11 format=2]
+[gd_scene load_steps=32 format=2]
 
 [ext_resource path="res://player/casting.png" type="Texture" id=1]
 [ext_resource path="res://player/player.gd" type="Script" id=2]
 [ext_resource path="res://player/bobber.png" type="Texture" id=3]
 [ext_resource path="res://hook/hook.tscn" type="PackedScene" id=4]
 [ext_resource path="res://player/reeling.png" type="Texture" id=5]
+[ext_resource path="res://player/idle.png" type="Texture" id=6]
+[ext_resource path="res://fish/small_shadow.png" type="Texture" id=7]
+[ext_resource path="res://fish/sapphire_jack.png" type="Texture" id=8]
+[ext_resource path="res://player/catch.png" type="Texture" id=9]
+[ext_resource path="res://player/splash.png" type="Texture" id=10]
 
 [sub_resource type="Animation" id=1]
 resource_name = "cast"
@@ -127,7 +132,7 @@ tracks/9/loop_wrap = true
 tracks/9/imported = false
 tracks/9/enabled = true
 tracks/9/keys = {
-"times": PoolRealArray( 0 ),
+"times": PoolRealArray( 0.05 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
 "values": [ true ]
@@ -282,8 +287,10 @@ tracks/10/keys = {
 }
 
 [sub_resource type="Animation" id=3]
+resource_name = "catch"
+length = 2.8
 tracks/0/type = "value"
-tracks/0/path = NodePath(".:region_rect")
+tracks/0/path = NodePath(".:texture")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/imported = false
@@ -292,7 +299,239 @@ tracks/0/keys = {
 "times": PoolRealArray( 0 ),
 "transitions": PoolRealArray( 1 ),
 "update": 1,
-"values": [ Rect2( 0, 0, 128, 128 ) ]
+"values": [ ExtResource( 9 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 128, 160 ), Rect2( 128, 0, 128, 160 ), Rect2( 256, 0, 128, 160 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath(".:offset")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Vector2( 0, -16 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("FishShadow:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("FishShadow:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 41, 168.433 ), Vector2( 41, 70.247 ), Vector2( 41, 70.247 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("RodTip:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 42.8429, 4.66969 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("Bobber:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ Vector2( 41, 66.159 ), Vector2( 41, 59.856 ), Vector2( 27.0333, -128.327 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("HookLine:points")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ PoolVector2Array( 41.5944, 74.5545, 42.2246, 167.201 ), PoolVector2Array( 40.8975, 69.2079, 40.4574, 74.4893 ), PoolVector2Array( 40.8975, 69.2079, 40.4574, 74.4893 ) ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("SplashAnimation:playing")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("SplashAnimation:visible")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("FishingLine:points")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0, 1, 2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ PoolVector2Array( 41.7487, 4.92123, 40.9992, 58.3694 ), PoolVector2Array( 41.9042, -5.25854, 41.1689, 52.2385 ), PoolVector2Array( 30.5775, -119.333, 32.7828, -83.3137 ) ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("HookLine:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ true, false ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath("Bobber:rotation_degrees")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ 0.0, 164.812 ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("CaughtFish:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("CaughtFish:position")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"times": PoolRealArray( 2, 2.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 21.3176, -140.402 ), Vector2( -115.183, -404.168 ) ]
+}
+tracks/15/type = "value"
+tracks/15/path = NodePath("CaughtFish:rotation_degrees")
+tracks/15/interp = 1
+tracks/15/loop_wrap = true
+tracks/15/imported = false
+tracks/15/enabled = true
+tracks/15/keys = {
+"times": PoolRealArray( 2, 2.8 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ 59.1982, -66.5 ]
+}
+tracks/16/type = "value"
+tracks/16/path = NodePath("Hook:position")
+tracks/16/interp = 1
+tracks/16/loop_wrap = true
+tracks/16/imported = false
+tracks/16/enabled = true
+tracks/16/keys = {
+"times": PoolRealArray( 2 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ Vector2( 23.158, -139.042 ) ]
+}
+tracks/17/type = "value"
+tracks/17/path = NodePath("Hook:rotation_degrees")
+tracks/17/interp = 1
+tracks/17/loop_wrap = true
+tracks/17/imported = false
+tracks/17/enabled = true
+tracks/17/keys = {
+"times": PoolRealArray( 2 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 163.41 ]
+}
+tracks/18/type = "value"
+tracks/18/path = NodePath("Hook:visible")
+tracks/18/interp = 1
+tracks/18/loop_wrap = true
+tracks/18/imported = false
+tracks/18/enabled = true
+tracks/18/keys = {
+"times": PoolRealArray( 0, 2 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+
+[sub_resource type="Animation" id=4]
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 128, 128 ), Rect2( 128, 0, 128, 128 ) ]
 }
 tracks/1/type = "value"
 tracks/1/path = NodePath(".:idle")
@@ -414,9 +653,84 @@ tracks/10/keys = {
 "update": 1,
 "values": [ false ]
 }
+tracks/11/type = "value"
+tracks/11/path = NodePath(".:texture")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 6 ) ]
+}
+tracks/12/type = "value"
+tracks/12/path = NodePath(".:offset")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ) ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("FishShadow:visible")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
+tracks/14/type = "value"
+tracks/14/path = NodePath("CaughtFish:visible")
+tracks/14/interp = 1
+tracks/14/loop_wrap = true
+tracks/14/imported = false
+tracks/14/enabled = true
+tracks/14/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
+}
 
-[sub_resource type="Animation" id=4]
-resource_name = "reeling"
+[sub_resource type="Animation" id=5]
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ ExtResource( 6 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath(".:region_rect")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 128, 128 ), Rect2( 128, 0, 128, 128 ) ]
+}
+
+[sub_resource type="Animation" id=6]
 length = 6.0
 loop = true
 tracks/0/type = "value"
@@ -455,13 +769,94 @@ tracks/2/keys = {
 "update": 1,
 "values": [ Vector2( 48.7397, -12.2111 ), Vector2( 18.9486, 15.9911 ), Vector2( 42.3842, -7.04728 ), Vector2( 40.7953, -18.5665 ), Vector2( 42.3842, -6.25288 ), Vector2( 19.743, 15.5939 ), Vector2( 43.1787, -6.65009 ) ]
 }
+tracks/3/type = "value"
+tracks/3/path = NodePath("HookLine:visible")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
-[sub_resource type="RectangleShape2D" id=5]
+[sub_resource type="RectangleShape2D" id=7]
 extents = Vector2( 10, 89.7977 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 7 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 7 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=10]
+animations = [ {
+"frames": [ SubResource( 8 ), SubResource( 9 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 8 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 8 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=13]
+animations = [ {
+"frames": [ SubResource( 11 ), SubResource( 12 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 10 )
+region = Rect2( 0, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 10 )
+region = Rect2( 32, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 10 )
+region = Rect2( 64, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=17]
+atlas = ExtResource( 10 )
+region = Rect2( 96, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=18]
+atlas = ExtResource( 10 )
+region = Rect2( 128, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=19]
+atlas = ExtResource( 10 )
+region = Rect2( 160, 0, 32, 32 )
+
+[sub_resource type="AtlasTexture" id=20]
+atlas = ExtResource( 10 )
+region = Rect2( 192, 0, 32, 32 )
+
+[sub_resource type="SpriteFrames" id=21]
+animations = [ {
+"frames": [ SubResource( 14 ), SubResource( 15 ), SubResource( 16 ), SubResource( 17 ), SubResource( 18 ), SubResource( 19 ), SubResource( 20 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
 
 [node name="Player" type="Sprite"]
 position = Vector2( 502.437, 301.814 )
 texture = ExtResource( 1 )
+offset = Vector2( 0, -16 )
 region_enabled = true
 region_rect = Rect2( 384, 0, 128, 128 )
 script = ExtResource( 2 )
@@ -472,17 +867,13 @@ line_cast = true
 autoplay = "idle"
 anims/cast = SubResource( 1 )
 anims/cast_start = SubResource( 2 )
-anims/idle = SubResource( 3 )
-anims/reeling = SubResource( 4 )
-
-[node name="Bobber" type="Sprite" parent="."]
-position = Vector2( 47.7581, 29.037 )
-rotation = -0.115192
-scale = Vector2( 0.5, 0.5 )
-texture = ExtResource( 3 )
+anims/catch = SubResource( 3 )
+anims/idle = SubResource( 4 )
+anims/idle_fishing = SubResource( 5 )
+anims/reeling = SubResource( 6 )
 
 [node name="FishingLine" type="Line2D" parent="."]
-points = PoolVector2Array( 48.3458, -10.2988, 47.791, 21.0462 )
+points = PoolVector2Array( 30.5775, -119.333, 32.7828, -83.3137 )
 width = 1.0
 default_color = Color( 1, 1, 1, 1 )
 
@@ -493,13 +884,20 @@ position = Vector2( 64.3973, -28.2607 )
 position = Vector2( 93.9335, 66.5895 )
 
 [node name="Hook" parent="." instance=ExtResource( 4 )]
-position = Vector2( 48.5172, 39.7166 )
+position = Vector2( 23.158, -139.042 )
+rotation = 2.85205
 in_water = true
 
 [node name="HookLine" type="Line2D" parent="."]
-points = PoolVector2Array( 47.7254, 35.9609, 47.4176, 38.577 )
+points = PoolVector2Array( 40.8975, 69.2079, 40.4574, 74.4893 )
 width = 1.0
 default_color = Color( 1, 1, 1, 0.239216 )
+
+[node name="Bobber" type="Sprite" parent="."]
+position = Vector2( 27.0333, -128.327 )
+rotation = -0.115192
+scale = Vector2( 0.5, 0.5 )
+texture = ExtResource( 3 )
 
 [node name="CatchArea" type="Area2D" parent="." groups=[
 "catch_area",
@@ -508,6 +906,30 @@ position = Vector2( 25.1984, 74.9839 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="CatchArea"]
 position = Vector2( 0, 80.3509 )
-shape = SubResource( 5 )
+shape = SubResource( 7 )
+
+[node name="FishShadow" type="AnimatedSprite" parent="."]
+visible = false
+position = Vector2( 41, 70.247 )
+rotation = -1.5708
+frames = SubResource( 10 )
+playing = true
+offset = Vector2( -8, 0 )
+
+[node name="CaughtFish" type="AnimatedSprite" parent="."]
+position = Vector2( -12.8076, -206.343 )
+rotation = 0.484742
+frames = SubResource( 13 )
+frame = 1
+playing = true
+offset = Vector2( -16, 0 )
+
+[node name="SplashAnimation" type="AnimatedSprite" parent="."]
+position = Vector2( 43.7076, 52.0899 )
+frames = SubResource( 21 )
+frame = 6
+speed_scale = 4.0
+playing = true
 [connection signal="fish_hooked" from="Hook" to="." method="_on_fish_hooked"]
 [connection signal="area_entered" from="CatchArea" to="." method="_on_CatchArea_entered"]
+[connection signal="animation_finished" from="SplashAnimation" to="." method="_on_SplashAnimation_finished"]

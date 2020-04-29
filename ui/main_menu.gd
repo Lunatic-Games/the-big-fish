@@ -1,4 +1,4 @@
-extends MarginContainer
+extends Control
 
 signal play_game
 signal go_to_settings

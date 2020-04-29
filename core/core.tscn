@@ -126,7 +126,7 @@ tracks/8/keys = {
 } ]
 }
 tracks/9/type = "value"
-tracks/9/path = NodePath("NinePatchRect:visible")
+tracks/9/path = NodePath("Clock:visible")
 tracks/9/interp = 1
 tracks/9/loop_wrap = true
 tracks/9/imported = false
@@ -315,7 +315,7 @@ anims/intro = SubResource( 1 )
 anims/scroll_away = SubResource( 2 )
 anims/scroll_transition = SubResource( 3 )
 
-[node name="NinePatchRect" type="NinePatchRect" parent="."]
+[node name="Clock" type="NinePatchRect" parent="."]
 visible = false
 margin_left = 442.0
 margin_top = 3.0
@@ -330,7 +330,7 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="Label" type="Label" parent="NinePatchRect"]
+[node name="Label" type="Label" parent="Clock"]
 margin_right = 145.0
 margin_bottom = 33.0
 custom_fonts/font = SubResource( 4 )

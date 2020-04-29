@@ -2,10 +2,11 @@ extends Node2D
 
 signal paused  # Show pause menu
 
-var fish_scene = preload("res://fish/fish.tscn")
+var fish_scene = preload("res://fish/big_fish.tscn")
 
 func start():
 	get_tree().paused = false
+	$GameTimer.start()
 	spawn_fish("left")
 	spawn_fish("right")
 
@@ -21,6 +22,7 @@ func reset():
 	$Water/RightSide/Player/AnimationPlayer.play("idle")
 	for fish in get_tree().get_nodes_in_group("fish"):
 		fish.queue_free()
+	$GameTimer.stop()
 		
 func spawn_fish(side):
 	var fish = fish_scene.instance()
