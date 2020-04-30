@@ -7,4 +7,4 @@ func _process(_delta):
 
 
 func _on_Splash_finished():
-	get_tree().change_scene("res://core/core.tscn")
+	var _err = get_tree().change_scene("res://core/core.tscn")

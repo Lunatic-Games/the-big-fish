@@ -7,7 +7,8 @@ func _ready():
 	get_tree().paused = true
 	$MainMenu/MarginContainer/VBoxContainer/PlayButton.grab_focus()
 	$RightSide/Viewport.world_2d = $LeftSide/Viewport.world_2d
-	#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	$Clock/Label.text = "%3.0f" % $LeftSide/Viewport/Game/GameTimer.wait_time
 
 func _process(_delta):
 	if $AnimationPlayer.current_animation == "intro":
@@ -17,10 +18,8 @@ func _process(_delta):
 			else:
 				$AnimationPlayer.playback_speed = -8
 	
-	if get_tree().paused:
-		$Clock/Label.text = "%4.2f" % $LeftSide/Viewport/Game/GameTimer.wait_time
-	else:
-		$Clock/Label.text = "%4.2f" % $LeftSide/Viewport/Game/GameTimer.time_left
+	if !get_tree().paused:
+		$Clock/Label.text = "%3.0f" % $LeftSide/Viewport/Game/GameTimer.time_left
 				
 
 # Start intro transition
@@ -68,6 +67,8 @@ func intro_start():
 		$MainMenu/MarginContainer/VBoxContainer/PlayButton.grab_focus()
 		$MainMenu/AnimationPlayer.play("fade_in")
 		$LeftSide/Viewport/Game.reset()
+	else:
+		$LeftSide/Viewport/Game.reset_stage_2()
 	$AnimationPlayer.playback_speed = 1
 	
 func play_main_menu_animation():

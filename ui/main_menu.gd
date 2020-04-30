@@ -7,7 +7,7 @@ signal go_to_settings
 func _on_PlayButton_pressed():
 	$AnimationPlayer.play("fade_out")
 	
-func _process(delta):
+func _process(_delta):
 	if Input.is_action_just_pressed("ui_accept"):
 		if $AnimationPlayer.current_animation == "intro":
 			$AnimationPlayer.advance($AnimationPlayer.current_animation_length)

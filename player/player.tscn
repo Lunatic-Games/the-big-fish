@@ -867,11 +867,13 @@ animations = [ {
 position = Vector2( 502.437, 301.814 )
 texture = ExtResource( 5 )
 region_enabled = true
-region_rect = Rect2( 0, 0, 128, 128 )
+region_rect = Rect2( 384, 0, 128, 128 )
 script = ExtResource( 2 )
 side = "left"
+line_cast = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+pause_mode = 2
 autoplay = "idle"
 anims/cast = SubResource( 1 )
 anims/cast_start = SubResource( 2 )
@@ -886,7 +888,7 @@ width = 1.0
 default_color = Color( 1, 1, 1, 1 )
 
 [node name="RodTip" type="Position2D" parent="."]
-position = Vector2( 48.7397, -12.2111 )
+position = Vector2( 64.3973, -28.2607 )
 
 [node name="BobberStart" type="Position2D" parent="."]
 position = Vector2( 93.9335, 66.5895 )
@@ -894,6 +896,7 @@ position = Vector2( 93.9335, 66.5895 )
 [node name="Hook" parent="." instance=ExtResource( 4 )]
 position = Vector2( 48.5172, 39.7166 )
 rotation = 2.85204
+in_water = true
 
 [node name="HookLine" type="Line2D" parent="."]
 points = PoolVector2Array( 41.5944, 74.5545, 42.2246, 167.201 )
@@ -902,6 +905,7 @@ default_color = Color( 1, 1, 1, 0.239216 )
 
 [node name="Bobber" type="Sprite" parent="."]
 position = Vector2( 47.7581, 29.037 )
+rotation = -0.115192
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 3 )
 
@@ -919,7 +923,6 @@ visible = false
 position = Vector2( 41, 168.433 )
 rotation = -1.5708
 frames = SubResource( 10 )
-frame = 1
 playing = true
 offset = Vector2( -8, 0 )
 
@@ -928,6 +931,7 @@ visible = false
 position = Vector2( -12.8076, -206.344 )
 rotation = 0.484741
 frames = SubResource( 13 )
+frame = 1
 playing = true
 offset = Vector2( -16, 0 )
 

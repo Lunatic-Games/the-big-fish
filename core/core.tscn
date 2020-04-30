@@ -8,13 +8,13 @@
 [ext_resource path="res://core/split.png" type="Texture" id=6]
 [ext_resource path="res://ui/clock.png" type="Texture" id=7]
 [ext_resource path="res://ui/upheavtt.ttf" type="DynamicFontData" id=8]
-[ext_resource path="res://ui/Summary.tscn" type="PackedScene" id=9]
+[ext_resource path="res://ui/summary.tscn" type="PackedScene" id=9]
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=1]
 size = 36
 font_data = ExtResource( 8 )
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=2]
 resource_name = "fade_in"
 tracks/0/type = "value"
 tracks/0/path = NodePath("BlackRect:modulate")
@@ -43,8 +43,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=1]
-resource_name = "intro"
+[sub_resource type="Animation" id=3]
 length = 6.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("LeftSide/Viewport/Camera2D:position")
@@ -252,7 +251,7 @@ __meta__ = {
 [node name="Label" type="Label" parent="Clock"]
 margin_right = 145.0
 margin_bottom = 33.0
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 1 )
 text = "60:00"
 align = 1
 
@@ -271,17 +270,17 @@ visible = false
 margin_right = 1024.0
 margin_bottom = 576.0
 
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-autoplay = "fade_in"
-anims/fade_in = SubResource( 5 )
-anims/intro = SubResource( 1 )
-
 [node name="Summary" parent="." instance=ExtResource( 9 )]
 visible = false
 margin_left = 0.0
 margin_top = 0.0
 margin_right = 1024.0
 margin_bottom = 576.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "fade_in"
+anims/fade_in = SubResource( 2 )
+anims/intro = SubResource( 3 )
 
 [node name="BlackRect" type="ColorRect" parent="."]
 anchor_right = 1.0

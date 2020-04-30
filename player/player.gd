@@ -45,6 +45,15 @@ func _physics_process(delta):
 		track_line()
 		
 	
+func reset():
+	$AnimationPlayer.play("idle")
+	$AnimationPlayer.pause_mode = Node.PAUSE_MODE_PROCESS
+	$Hook.in_water = false
+	$Hook.hooked_fish = null
+	fish_on_line = null
+	last_reel_rot = null
+	casting_charge = MIN_CAST_DISTANCE
+	
 func increase_cast_distance(delta):
 	casting_charge += CHARGE_RATE * delta
 	casting_charge = min(casting_charge, MAX_CAST_DISTANCE)

@@ -6,6 +6,9 @@ signal finished
 export (int) var UNCOMMON_CHANCE = 30
 export (int) var RARE_CHANCE = 10
 
+const SLOW_MO_THRESHOLD = 0.5
+const SLOW_MO_SCALE = 0.25
+
 var COMMON_CHANCE = 100 - UNCOMMON_CHANCE - RARE_CHANCE
 var COMMON_FISH = [preload("res://fish/small_snout_shod.tscn"),
 	preload("res://fish/sapphire_jack.tscn")]
@@ -21,16 +24,24 @@ func start():
 
 # Handle pausing
 func _process(_delta):
-	if Input.is_action_just_pressed("pause"):
+	if Input.is_action_just_pressed("pause") and $GameTimer.time_left > SLOW_MO_THRESHOLD:
+		Engine.time_scale = 1
 		get_tree().paused = true
 		emit_signal("paused")
+		
+	if $GameTimer.time_left <= SLOW_MO_THRESHOLD:
+		Engine.time_scale = SLOW_MO_SCALE
 	
 func reset():
-	$Water/LeftSide/Player/AnimationPlayer.play("idle")
-	$Water/RightSide/Player/AnimationPlayer.play("idle")
+	$Water/LeftSide/Player.reset()
+	$Water/RightSide/Player.reset()
 	for fish in get_tree().get_nodes_in_group("fish"):
 		fish.queue_free()
-	$GameTimer.stop()
+	$GameTimer.start()
+	
+func reset_stage_2():
+	$Water/LeftSide/Player/AnimationPlayer.pause_mode = PAUSE_MODE_INHERIT
+	$Water/RightSide/Player/AnimationPlayer.pause_mode = PAUSE_MODE_INHERIT
 		
 func spawn_fish(side):
 	var fish
@@ -54,6 +65,6 @@ func spawn_fish(side):
 
 
 func _on_GameTimer_timeout():
-	return
 	get_tree().paused = true
 	emit_signal("finished")
+	Engine.time_scale = 1
