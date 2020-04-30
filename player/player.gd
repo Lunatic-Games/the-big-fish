@@ -10,7 +10,7 @@ const MAX_CAST_DISTANCE = 250
 const CHARGE_RATE = 100
 const AXIS_THRESHOLD = 0.9
 const REEL_SPEED = 750
-const BOBBER_PULL = 3
+const BOBBER_PULL = 150
 
 var casting_charge = MIN_CAST_DISTANCE
 var device_id
@@ -25,7 +25,8 @@ func _ready():
 		$AnimationPlayer.advance(1.5)
 	
 func _physics_process(delta):
-	if idle and Input.is_action_just_pressed("cast_" + side):
+	if (($AnimationPlayer.current_animation == "idle_fishing" or idle) 
+			and Input.is_action_just_pressed("cast_" + side)):
 		$AnimationPlayer.play("cast_start")
 		
 	if powering_cast and !Input.is_action_pressed("cast_" + side):
@@ -85,7 +86,8 @@ func move_bobber(amount):
 	if side == "right":
 		adj *= -1
 	var movement = adj + $RodTip.position.x - $Bobber.position.x
-	$Bobber.position.x += amount * movement
+	if abs(movement) > abs(amount):
+		$Bobber.position.x += amount * sign(movement)
 	
 func cast_line():
 	$Bobber.position = $BobberStart.position
@@ -99,6 +101,7 @@ func cast_line():
 func _on_fish_hooked(_fish):
 	$AnimationPlayer.play("reeling")
 	fish_on_line = _fish
+	fish_on_line.connect("broke_free", self, "_on_fish_broke_free")
 	
 func _on_CatchArea_entered(area):
 	if area.is_in_group("fish"):
@@ -135,6 +138,15 @@ func get_joystick_axi():
 	var vert = Input.get_joy_axis(device_id, JOY_AXIS_1)
 	return Vector2(horiz, vert)
 
-
 func _on_SplashAnimation_finished():
 	$SplashAnimation.visible = false
+	
+func set_texture(anim_name):
+	texture = load("res://player/" + anim_name + "_" + side + ".png")
+
+func _on_fish_broke_free():
+	$Hook.hooked_fish = null
+	fish_on_line.disconnect("broke_free", self, "_on_fish_broke_free")
+	fish_on_line = null
+	idle = true
+	$AnimationPlayer.play("idle")

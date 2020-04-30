@@ -1,8 +1,16 @@
 extends Node2D
 
 signal paused  # Show pause menu
+signal finished
 
-var fish_scene = preload("res://fish/big_fish.tscn")
+export (int) var UNCOMMON_CHANCE = 30
+export (int) var RARE_CHANCE = 10
+
+var COMMON_CHANCE = 100 - UNCOMMON_CHANCE - RARE_CHANCE
+var COMMON_FISH = [preload("res://fish/small_snout_shod.tscn"),
+	preload("res://fish/sapphire_jack.tscn")]
+var UNCOMMON_FISH = [preload("res://fish/three_eyed_warbler.tscn")]
+var RARE_FISH = [preload("res://fish/glowing_gandersnatch.tscn")]
 
 func start():
 	get_tree().paused = false
@@ -25,7 +33,14 @@ func reset():
 	$GameTimer.stop()
 		
 func spawn_fish(side):
-	var fish = fish_scene.instance()
+	var fish
+	var rarity = randi() % 100
+	if rarity < COMMON_CHANCE:
+		fish = COMMON_FISH[randi() % COMMON_FISH.size()].instance()
+	elif rarity < COMMON_CHANCE + UNCOMMON_CHANCE:
+		fish = UNCOMMON_FISH[randi() % UNCOMMON_FISH.size()].instance()
+	else:
+		fish = RARE_FISH[randi() % RARE_FISH.size()].instance()	
 	var fish_area
 	if side == "left":
 		fish_area = $Water/LeftSide/FishArea
@@ -36,3 +51,9 @@ func spawn_fish(side):
 	fish.position = fish_area.get_node("SpawnPosition").position
 	fish.connect("caught", self, "spawn_fish", [side])
 	fish_area.call_deferred("add_child", fish)
+
+
+func _on_GameTimer_timeout():
+	return
+	get_tree().paused = true
+	emit_signal("finished")

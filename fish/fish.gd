@@ -1,6 +1,7 @@
 extends Area2D
 
 signal caught
+signal broke_free
 
 export (String) var side
 export (int) var SPEED = 50
@@ -14,16 +15,30 @@ var combo_angle = [0, 0]
 
 const VERTICAL_MAX = 0.45  # Vertical movement will be in range (-VM, VM)
 const BUTTONS = ["AButton", "BButton", "XButton", "YButton"]
-const HOOK_SIGHT_RANGE = 400
-const ANGLE_RANGE = PI / 4
-const INNER_INDICATOR_DIST = 10
-const OUTER_INDICATOR_DIST = 40
+const HOOK_SIGHT_RANGE = 50
+const ANGLE_RANGE = PI / 3
+const INDICATOR_RADIUS = 40
+const INDICATOR_COLOR = Color(1.0, 0.0, 0.0, 0.5)
 
 # Start with a random velocity
 func _ready():
 	randomize()
 	random_velocity()
 
+func _draw():
+	if !shown_button:
+		return
+	var points = PoolVector2Array()
+	var colors = PoolColorArray([INDICATOR_COLOR])
+	var center = $AButton.position
+	var inc = -ANGLE_RANGE / 32
+	points.push_back(center)
+	
+	for i in range(33):
+		var angle = combo_angle[0] + i * inc + ANGLE_RANGE
+		points.push_back(center + Vector2(cos(angle), sin(angle)) * INDICATOR_RADIUS)
+	draw_polygon(points, colors)
+	
 # Move with velocity
 func _physics_process(delta):
 	if not on_hook:
@@ -91,28 +106,15 @@ func hooked():
 		
 func display_combination():
 	shown_button = BUTTONS[randi() % 4]
-	get_node(shown_button).visible = true
+	$Button.texture = get_node(shown_button).texture
+	$Button.visible = true
+	$AnimationPlayer.play("button")
 	
 	combo_angle[0] = rand_range(-PI, PI)
 	combo_angle[1] = combo_angle[0] + ANGLE_RANGE
 	if combo_angle[1] > PI:
 		combo_angle[1] = -PI + (combo_angle[1] - PI)
-	update_range_indicator()
-	$RangeIndicator.visible = true
-	
-func update_range_indicator():
-	var p1 = Vector2(cos(combo_angle[0]) * INNER_INDICATOR_DIST,
-		sin(combo_angle[0]) * INNER_INDICATOR_DIST) + $AButton.position
-	var p2 = Vector2(cos(combo_angle[0]) * OUTER_INDICATOR_DIST,
-		sin(combo_angle[0]) * OUTER_INDICATOR_DIST) + $AButton.position
-	var p3 = Vector2(cos(combo_angle[1]) * OUTER_INDICATOR_DIST,
-		sin(combo_angle[1]) * OUTER_INDICATOR_DIST) + $AButton.position
-	var p4 = Vector2(cos(combo_angle[1]) * INNER_INDICATOR_DIST,
-		sin(combo_angle[1]) * INNER_INDICATOR_DIST) + $AButton.position
-	$RangeIndicator.polygon[0] = p1
-	$RangeIndicator.polygon[1] = p2
-	$RangeIndicator.polygon[2] = p3
-	$RangeIndicator.polygon[3] = p4
+	update()
 	
 func reel_in(amount):
 	if shown_button:
@@ -134,7 +136,9 @@ func test_combination(button, angle):
 		get_node(shown_button).visible = false
 		shown_button = null
 		$ButtonPopupTimer.start()
-		$RangeIndicator.visible = false
+		$Button.visible = false
+		$AnimationPlayer.stop()
+		update()
 	
 func angle_in_range(angle):
 	if combo_angle[1] > -PI and combo_angle[0] >= PI / 2:
@@ -148,3 +152,11 @@ func get_mouth_position():
 	else:
 		pos.x += TEXTURE_SIZE.x / 2
 	return pos
+	
+func broke_free():
+	on_hook = false
+	shown_button = null
+	update()
+	$DirectionTimer.start()
+	$ButtonPopupTimer.stop()
+	emit_signal("broke_free")

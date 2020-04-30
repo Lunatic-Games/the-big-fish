@@ -2,38 +2,38 @@
 
 [ext_resource path="res://fish/fish.tscn" type="PackedScene" id=1]
 [ext_resource path="res://fish/big_shadow.png" type="Texture" id=2]
-[ext_resource path="res://fish/sapphire_jack.png" type="Texture" id=3]
+[ext_resource path="res://fish/three_eyed_warbler.png" type="Texture" id=3]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 15.5298, 8.06567 )
+extents = Vector2( 17.4169, 8.01559 )
 
-[sub_resource type="AtlasTexture" id=2]
+[sub_resource type="AtlasTexture" id=11]
 atlas = ExtResource( 2 )
-region = Rect2( 0, 0, 32, 32 )
+region = Rect2( 0, 0, 40, 40 )
 
-[sub_resource type="AtlasTexture" id=3]
+[sub_resource type="AtlasTexture" id=12]
 atlas = ExtResource( 2 )
-region = Rect2( 32, 0, 32, 32 )
+region = Rect2( 40, 0, 40, 40 )
 
 [sub_resource type="SpriteFrames" id=9]
 animations = [ {
-"frames": [ SubResource( 2 ), SubResource( 3 ) ],
+"frames": [ SubResource( 11 ), SubResource( 12 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
 } ]
 
-[sub_resource type="AtlasTexture" id=7]
+[sub_resource type="AtlasTexture" id=13]
 atlas = ExtResource( 3 )
 region = Rect2( 0, 0, 32, 32 )
 
-[sub_resource type="AtlasTexture" id=8]
+[sub_resource type="AtlasTexture" id=2]
 atlas = ExtResource( 3 )
 region = Rect2( 32, 0, 32, 32 )
 
 [sub_resource type="SpriteFrames" id=10]
 animations = [ {
-"frames": [ SubResource( 7 ), SubResource( 8 ) ],
+"frames": [ SubResource( 13 ), SubResource( 2 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
@@ -43,12 +43,13 @@ animations = [ {
 TEXTURE_SIZE = Vector2( 32, 14 )
 
 [node name="CollisionShape2D" parent="." index="0"]
-position = Vector2( -0.5, -2 )
+position = Vector2( -0.5, 0 )
 shape = SubResource( 1 )
 
 [node name="ShadowSprite" parent="." index="1"]
 frames = SubResource( 9 )
 frame = 1
 
-[node name="FishSprite" parent="." index="10"]
+[node name="FishSprite" parent="." index="9"]
+visible = true
 frames = SubResource( 10 )

@@ -1,31 +1,61 @@
-[gd_scene load_steps=17 format=2]
+[gd_scene load_steps=18 format=2]
 
 [ext_resource path="res://fish/small_shadow.png" type="Texture" id=1]
 [ext_resource path="res://fish/fish.gd" type="Script" id=2]
-[ext_resource path="res://fish/button_a.png" type="Texture" id=3]
-[ext_resource path="res://fish/button_y.png" type="Texture" id=4]
-[ext_resource path="res://fish/button_b.png" type="Texture" id=5]
-[ext_resource path="res://fish/button_x.png" type="Texture" id=6]
+[ext_resource path="res://fish/a_button.png" type="Texture" id=3]
+[ext_resource path="res://fish/b_button.png" type="Texture" id=4]
+[ext_resource path="res://fish/x_button.png" type="Texture" id=5]
+[ext_resource path="res://fish/y_button.png" type="Texture" id=6]
 [ext_resource path="res://fish/sapphire_jack.png" type="Texture" id=7]
 
 [sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 7.98135, 4.01343 )
+extents = Vector2( 10.0222, 4.9903 )
 
-[sub_resource type="AtlasTexture" id=2]
+[sub_resource type="AtlasTexture" id=10]
 atlas = ExtResource( 1 )
-region = Rect2( 0, 0, 16, 16 )
+region = Rect2( 0, 0, 20, 20 )
 
-[sub_resource type="AtlasTexture" id=3]
+[sub_resource type="AtlasTexture" id=11]
 atlas = ExtResource( 1 )
-region = Rect2( 16, 0, 16, 16 )
+region = Rect2( 20, 0, 20, 20 )
 
 [sub_resource type="SpriteFrames" id=4]
 animations = [ {
-"frames": [ SubResource( 2 ), SubResource( 3 ) ],
+"frames": [ SubResource( 10 ), SubResource( 11 ) ],
 "loop": true,
 "name": "default",
 "speed": 5.0
 } ]
+
+[sub_resource type="Animation" id=12]
+resource_name = "button"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Button:region_rect")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1, 1.5, 1.6, 1.7, 1.8, 1.9, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ Rect2( 0, 0, 64, 64 ), Rect2( 64, 0, 64, 64 ), Rect2( 128, 0, 64, 64 ), Rect2( 192, 0, 64, 64 ), Rect2( 0, 64, 64, 64 ), Rect2( 64, 64, 64, 64 ), Rect2( 128, 64, 64, 64 ), Rect2( 192, 64, 64, 64 ), Rect2( 256, 64, 64, 64 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1.5 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "broke_free"
+} ]
+}
 
 [sub_resource type="Animation" id=5]
 tracks/0/type = "value"
@@ -93,7 +123,7 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
-TEXTURE_SIZE = Vector2( 16, 8 )
+TEXTURE_SIZE = Vector2( 20, 10 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 modulate = Color( 0.941176, 0.941176, 0.941176, 1 )
@@ -102,7 +132,7 @@ position = Vector2( 0, 1 )
 shape = SubResource( 1 )
 
 [node name="ShadowSprite" type="AnimatedSprite" parent="."]
-modulate = Color( 0.498039, 0.498039, 0.498039, 1 )
+modulate = Color( 1, 1, 1, 0 )
 frames = SubResource( 4 )
 playing = true
 
@@ -114,6 +144,12 @@ autostart = true
 wait_time = 2.5
 one_shot = true
 
+[node name="Button" type="Sprite" parent="."]
+position = Vector2( 0, -40 )
+texture = ExtResource( 3 )
+region_enabled = true
+region_rect = Rect2( 256, 64, 64, 64 )
+
 [node name="AButton" type="Sprite" parent="."]
 visible = false
 position = Vector2( 0, -32 )
@@ -122,27 +158,23 @@ texture = ExtResource( 3 )
 [node name="BButton" type="Sprite" parent="."]
 visible = false
 position = Vector2( 0, -32 )
-texture = ExtResource( 5 )
+texture = ExtResource( 4 )
 
 [node name="XButton" type="Sprite" parent="."]
 visible = false
 position = Vector2( 0, -32 )
-texture = ExtResource( 6 )
+texture = ExtResource( 5 )
 
 [node name="YButton" type="Sprite" parent="."]
 visible = false
 position = Vector2( 0, -32 )
-texture = ExtResource( 4 )
+texture = ExtResource( 6 )
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "fade_in"
+anims/button = SubResource( 12 )
 anims/fade_in = SubResource( 5 )
 anims/fade_out = SubResource( 6 )
-
-[node name="RangeIndicator" type="Polygon2D" parent="."]
-visible = false
-color = Color( 0.972549, 0.411765, 0.0392157, 0.447059 )
-polygon = PoolVector2Array( 10.6806, -3.64529, 26.1749, -8.70041, 12.7865, -22.3196, 6.50525, -8.51653 )
 
 [node name="FishSprite" type="AnimatedSprite" parent="."]
 visible = false

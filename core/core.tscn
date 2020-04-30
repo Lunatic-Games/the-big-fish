@@ -8,6 +8,40 @@
 [ext_resource path="res://core/split.png" type="Texture" id=6]
 [ext_resource path="res://ui/clock.png" type="Texture" id=7]
 [ext_resource path="res://ui/upheavtt.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://ui/Summary.tscn" type="PackedScene" id=9]
+
+[sub_resource type="DynamicFont" id=4]
+size = 36
+font_data = ExtResource( 8 )
+
+[sub_resource type="Animation" id=5]
+resource_name = "fade_in"
+tracks/0/type = "value"
+tracks/0/path = NodePath("BlackRect:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "method"
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 1 ),
+"transitions": PoolRealArray( 1 ),
+"values": [ {
+"args": [  ],
+"method": "play_main_menu_animation"
+} ]
+}
 
 [sub_resource type="Animation" id=1]
 resource_name = "intro"
@@ -103,10 +137,10 @@ tracks/7/loop_wrap = true
 tracks/7/imported = false
 tracks/7/enabled = true
 tracks/7/keys = {
-"times": PoolRealArray( 4.1, 4.3 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 3.9, 4.1, 4.3, 4.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "update": 1,
-"values": [ false, true ]
+"values": [ false, false, true, true ]
 }
 tracks/8/type = "method"
 tracks/8/path = NodePath(".")
@@ -137,101 +171,6 @@ tracks/9/keys = {
 "update": 1,
 "values": [ false, true ]
 }
-
-[sub_resource type="Animation" id=2]
-resource_name = "scroll_away"
-tracks/0/type = "value"
-tracks/0/path = NodePath("LeftSide/Viewport/Camera2D:position")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( -256, 512 ), Vector2( -768, 512 ) ]
-}
-tracks/1/type = "value"
-tracks/1/path = NodePath("RightSide/Viewport/Camera2D:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 256, 512 ), Vector2( 768, 512 ) ]
-}
-tracks/2/type = "value"
-tracks/2/path = NodePath("LeftSide/Viewport/Game/MountainsLeft:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( -384, -18 ), Vector2( -640, -18 ) ]
-}
-tracks/3/type = "value"
-tracks/3/path = NodePath("LeftSide/Viewport/Game/MountainsRight:position")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 384, -18 ), Vector2( 640, -18 ) ]
-}
-tracks/4/type = "value"
-tracks/4/path = NodePath("LeftSide/Viewport/Game/ForestLeft:position")
-tracks/4/interp = 1
-tracks/4/loop_wrap = true
-tracks/4/imported = false
-tracks/4/enabled = true
-tracks/4/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( -448, 120 ), Vector2( -576, 120 ) ]
-}
-tracks/5/type = "value"
-tracks/5/path = NodePath("LeftSide/Viewport/Game/ForestRight:position")
-tracks/5/interp = 1
-tracks/5/loop_wrap = true
-tracks/5/imported = false
-tracks/5/enabled = true
-tracks/5/keys = {
-"times": PoolRealArray( 0, 1 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 0,
-"values": [ Vector2( 448, 120 ), Vector2( 576, 120 ) ]
-}
-
-[sub_resource type="Animation" id=3]
-resource_name = "scroll_transition"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/path = NodePath("Divider:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/keys = {
-"times": PoolRealArray( 0.2, 0.3 ),
-"transitions": PoolRealArray( 1, 1 ),
-"update": 1,
-"values": [ false, true ]
-}
-
-[sub_resource type="DynamicFont" id=4]
-size = 36
-font_data = ExtResource( 8 )
 
 [node name="Core" type="Node2D"]
 pause_mode = 2
@@ -295,26 +234,6 @@ __meta__ = {
 "_edit_use_anchors_": false
 }
 
-[node name="PauseMenu" parent="." instance=ExtResource( 5 )]
-visible = false
-margin_right = 1024.0
-margin_bottom = 576.0
-rect_min_size = Vector2( 1024, 576 )
-
-[node name="MainMenu" parent="." instance=ExtResource( 3 )]
-margin_right = 1024.0
-margin_bottom = 576.0
-
-[node name="SettingsMenu" parent="." instance=ExtResource( 4 )]
-visible = false
-margin_right = 1024.0
-margin_bottom = 576.0
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/intro = SubResource( 1 )
-anims/scroll_away = SubResource( 2 )
-anims/scroll_transition = SubResource( 3 )
-
 [node name="Clock" type="NinePatchRect" parent="."]
 visible = false
 margin_left = 442.0
@@ -336,6 +255,43 @@ margin_bottom = 33.0
 custom_fonts/font = SubResource( 4 )
 text = "60:00"
 align = 1
+
+[node name="PauseMenu" parent="." instance=ExtResource( 5 )]
+visible = false
+margin_right = 1024.0
+margin_bottom = 576.0
+rect_min_size = Vector2( 1024, 576 )
+
+[node name="MainMenu" parent="." instance=ExtResource( 3 )]
+margin_right = 1024.0
+margin_bottom = 576.0
+
+[node name="SettingsMenu" parent="." instance=ExtResource( 4 )]
+visible = false
+margin_right = 1024.0
+margin_bottom = 576.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "fade_in"
+anims/fade_in = SubResource( 5 )
+anims/intro = SubResource( 1 )
+
+[node name="Summary" parent="." instance=ExtResource( 9 )]
+visible = false
+margin_left = 0.0
+margin_top = 0.0
+margin_right = 1024.0
+margin_bottom = 576.0
+
+[node name="BlackRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+rect_min_size = Vector2( 1024, 576 )
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+[connection signal="finished" from="LeftSide/Viewport/Game" to="." method="_on_Game_finished"]
 [connection signal="paused" from="LeftSide/Viewport/Game" to="." method="_on_Game_paused"]
 [connection signal="continue_game" from="PauseMenu" to="." method="_on_continue_game"]
 [connection signal="go_to_main_menu" from="PauseMenu" to="." method="_return_to_main_menu"]

@@ -1,0 +1,34 @@
+[remap]
+
+importer="texture"
+type="StreamTexture"
+path="res://.import/catch_right.png-2dd349df2c884cdd22ed2f70361ed718.stex"
+metadata={
+"vram_texture": false
+}
+
+[deps]
+
+source_file="res://player/catch_right.png"
+dest_files=[ "res://.import/catch_right.png-2dd349df2c884cdd22ed2f70361ed718.stex" ]
+
+[params]
+
+compress/mode=0
+compress/lossy_quality=0.7
+compress/hdr_mode=0
+compress/bptc_ldr=0
+compress/normal_map=0
+flags/repeat=0
+flags/filter=false
+flags/mipmaps=false
+flags/anisotropic=false
+flags/srgb=2
+process/fix_alpha_border=true
+process/premult_alpha=false
+process/HDR_as_SRGB=false
+process/invert_color=false
+stream=false
+size_limit=0
+detect_3d=false
+svg/scale=1.0

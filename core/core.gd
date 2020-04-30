@@ -57,14 +57,21 @@ func _on_Game_paused():
 	$PauseMenu.ignore_pause = true
 	$PauseMenu/MarginContainer/VBoxContainer/ContinueButton.grab_focus()
 
+func _on_Game_finished():
+	$Summary.visible = true
+
 # Show mainmenu when doing outro
 func intro_start():
 	if returning_to_main_menu:
 		returning_to_main_menu = false
 		$MainMenu.visible = true
 		$MainMenu/MarginContainer/VBoxContainer/PlayButton.grab_focus()
+		$MainMenu/AnimationPlayer.play("fade_in")
 		$LeftSide/Viewport/Game.reset()
 	$AnimationPlayer.playback_speed = 1
+	
+func play_main_menu_animation():
+	$MainMenu/AnimationPlayer.play("intro")
 	
 # Begin the game
 func intro_end():
