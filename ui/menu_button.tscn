@@ -10,7 +10,7 @@
 
 [sub_resource type="StyleBoxEmpty" id=4]
 
-[sub_resource type="StyleBoxEmpty" id=7]
+[sub_resource type="StyleBoxEmpty" id=5]
 
 [sub_resource type="DynamicFont" id=6]
 size = 36
@@ -26,7 +26,7 @@ custom_styles/hover = SubResource( 1 )
 custom_styles/pressed = SubResource( 2 )
 custom_styles/focus = SubResource( 3 )
 custom_styles/disabled = SubResource( 4 )
-custom_styles/normal = SubResource( 7 )
+custom_styles/normal = SubResource( 5 )
 custom_fonts/font = SubResource( 6 )
 custom_colors/font_color = Color( 0.705882, 0.705882, 0.705882, 1 )
 custom_colors/font_color_hover = Color( 1, 1, 1, 1 )

@@ -8,6 +8,10 @@ const SLIDER_JUMP = 5
 var music_slider_held = false
 var sfx_slider_held = false
 
+func _ready():
+	$VBoxContainer/FullscreenContainer/CheckBox.pressed = OS.window_fullscreen
+	
+
 # Handle slider scrolling and keypresses
 func _process(delta):
 	if music_slider_held:
@@ -35,6 +39,11 @@ func _on_Fullscreen_pressed():
 	var check_box = get_node("VBoxContainer/FullscreenContainer/CheckBox")
 	check_box.pressed = !check_box.pressed
 	OS.window_fullscreen = !OS.window_fullscreen
+	ProjectSettings.set_setting("display/window/size/fullscreen", OS.window_fullscreen)
+	if !OS.window_fullscreen:
+		OS.set_window_size(Vector2(1024, 576))
+		OS.set_window_position(OS.get_screen_size() * 0.5 - OS.get_window_size() * 0.5)
+	var _err = ProjectSettings.save_custom("res://settings.godot")
 
 # Toggle screenshake
 func _on_Screenshake_pressed():

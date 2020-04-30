@@ -5,9 +5,10 @@ var returning_to_main_menu = false
 # Begin at main menu
 func _ready():
 	get_tree().paused = true
-	$MainMenu/VBoxContainer/PlayButton.grab_focus()
+	$MainMenu/MarginContainer/VBoxContainer/PlayButton.grab_focus()
 	$RightSide/Viewport.world_2d = $LeftSide/Viewport.world_2d
-	#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	$Clock/Label.text = "%3.0f" % $LeftSide/Viewport/Game/GameTimer.wait_time
 
 func _process(_delta):
 	if $AnimationPlayer.current_animation == "intro":
@@ -16,6 +17,9 @@ func _process(_delta):
 				$AnimationPlayer.playback_speed = 8
 			else:
 				$AnimationPlayer.playback_speed = -8
+	
+	if !get_tree().paused:
+		$Clock/Label.text = "%3.0f" % $LeftSide/Viewport/Game/GameTimer.time_left
 				
 
 # Start intro transition
@@ -34,7 +38,7 @@ func _return_from_settings():
 		$PauseMenu/MarginContainer/VBoxContainer/SettingsButton.grab_focus()
 	else:
 		$MainMenu.visible = true
-		$MainMenu/VBoxContainer/SettingsButton.grab_focus()
+		$MainMenu/MarginContainer/VBoxContainer/SettingsButton.grab_focus()
 	
 # Start outro transition
 func _return_to_main_menu():
@@ -52,14 +56,23 @@ func _on_Game_paused():
 	$PauseMenu.ignore_pause = true
 	$PauseMenu/MarginContainer/VBoxContainer/ContinueButton.grab_focus()
 
+func _on_Game_finished():
+	$Summary.visible = true
+
 # Show mainmenu when doing outro
 func intro_start():
 	if returning_to_main_menu:
 		returning_to_main_menu = false
 		$MainMenu.visible = true
-		$MainMenu/VBoxContainer/PlayButton.grab_focus()
+		$MainMenu/MarginContainer/VBoxContainer/PlayButton.grab_focus()
+		$MainMenu/AnimationPlayer.play("fade_in")
 		$LeftSide/Viewport/Game.reset()
+	else:
+		$LeftSide/Viewport/Game.reset_stage_2()
 	$AnimationPlayer.playback_speed = 1
+	
+func play_main_menu_animation():
+	$MainMenu/AnimationPlayer.play("intro")
 	
 # Begin the game
 func intro_end():

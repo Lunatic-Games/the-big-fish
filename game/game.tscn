@@ -120,3 +120,9 @@ percent_visible = false
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="GameTimer" type="Timer" parent="."]
+pause_mode = 2
+wait_time = 120.0
+one_shot = true
+[connection signal="timeout" from="GameTimer" to="." method="_on_GameTimer_timeout"]
