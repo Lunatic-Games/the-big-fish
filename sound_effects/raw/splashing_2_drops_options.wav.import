@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/splashing_2_drops_options.wav-8e57c17bd5229247da3e88dcfb823869.sample"
+
+[deps]
+
+source_file="res://sound_effects/raw/splashing_2_drops_options.wav"
+dest_files=[ "res://.import/splashing_2_drops_options.wav-8e57c17bd5229247da3e88dcfb823869.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

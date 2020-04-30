@@ -7,8 +7,7 @@ func _ready():
 	get_tree().paused = true
 	$MainMenu/MarginContainer/VBoxContainer/PlayButton.grab_focus()
 	$RightSide/Viewport.world_2d = $LeftSide/Viewport.world_2d
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	$Clock/Label.text = "%3.0f" % $LeftSide/Viewport/Game/GameTimer.wait_time
+	#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _process(_delta):
 	if $AnimationPlayer.current_animation == "intro":
@@ -19,12 +18,13 @@ func _process(_delta):
 				$AnimationPlayer.playback_speed = -8
 	
 	if !get_tree().paused:
-		$Clock/Label.text = "%3.0f" % $LeftSide/Viewport/Game/GameTimer.time_left
+		$Clock/Label.text = str(int($LeftSide/Viewport/Game/GameTimer.time_left))
 				
 
 # Start intro transition
 func _on_play_game():
 	$AnimationPlayer.play("intro", 0, 1)
+	$AnimationPlayer.queue("countdown")
 
 # Show settings
 func _go_to_settings():
@@ -43,21 +43,25 @@ func _return_from_settings():
 # Start outro transition
 func _return_to_main_menu():
 	returning_to_main_menu = true
+	$Countdown.visible = false
+	$AnimationPlayer.playback_active = true
 	get_tree().paused = true
 	$AnimationPlayer.play("intro", 0, -2, true)
 
 # Game has resumed
 func _on_continue_game():
-	pass
+	$AnimationPlayer.playback_active = true
 
 # Show pause menu
 func _on_Game_paused():
 	$PauseMenu.visible = true
 	$PauseMenu.ignore_pause = true
+	$AnimationPlayer.playback_active = false
 	$PauseMenu/MarginContainer/VBoxContainer/ContinueButton.grab_focus()
 
 func _on_Game_finished():
 	$Summary.visible = true
+	$Summary/AnimationPlayer.play("scroll_in")
 
 # Show mainmenu when doing outro
 func intro_start():
@@ -68,7 +72,7 @@ func intro_start():
 		$MainMenu/AnimationPlayer.play("fade_in")
 		$LeftSide/Viewport/Game.reset()
 	else:
-		$LeftSide/Viewport/Game.reset_stage_2()
+		$Clock/Label.text = str(int($LeftSide/Viewport/Game/GameTimer.wait_time))
 	$AnimationPlayer.playback_speed = 1
 	
 func play_main_menu_animation():
@@ -77,5 +81,14 @@ func play_main_menu_animation():
 # Begin the game
 func intro_end():
 	if not returning_to_main_menu:
-		$LeftSide/Viewport/Game.start()
+		$AnimationPlayer.play("countdown")
 	$AnimationPlayer.playback_speed = 1
+	
+func countdown_end():
+	$LeftSide/Viewport/Game.start()
+
+func _on_Summary_play_again():
+	$LeftSide/Viewport/Game.reset()
+	$Clock/Label.text = str(int($LeftSide/Viewport/Game/GameTimer.wait_time))
+	$AnimationPlayer.play("countdown")
+	

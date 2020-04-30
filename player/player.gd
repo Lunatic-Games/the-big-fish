@@ -47,7 +47,7 @@ func _physics_process(delta):
 	
 func reset():
 	$AnimationPlayer.play("idle")
-	$AnimationPlayer.pause_mode = Node.PAUSE_MODE_PROCESS
+	$AnimationPlayer.advance(0)
 	$Hook.in_water = false
 	$Hook.hooked_fish = null
 	fish_on_line = null
