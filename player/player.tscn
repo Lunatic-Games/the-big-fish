@@ -873,7 +873,6 @@ side = "left"
 line_cast = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-pause_mode = 2
 autoplay = "idle"
 anims/cast = SubResource( 1 )
 anims/cast_start = SubResource( 2 )

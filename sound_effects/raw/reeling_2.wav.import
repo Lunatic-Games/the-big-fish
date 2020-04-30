@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/reeling_2.wav-e463786144d754c9bca293513ed8b53a.sample"
+
+[deps]
+
+source_file="res://sound_effects/raw/reeling_2.wav"
+dest_files=[ "res://.import/reeling_2.wav-e463786144d754c9bca293513ed8b53a.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

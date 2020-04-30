@@ -10,7 +10,6 @@ var sfx_slider_held = false
 
 func _ready():
 	$VBoxContainer/FullscreenContainer/CheckBox.pressed = OS.window_fullscreen
-	
 
 # Handle slider scrolling and keypresses
 func _process(delta):

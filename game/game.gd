@@ -6,8 +6,8 @@ signal finished
 export (int) var UNCOMMON_CHANCE = 30
 export (int) var RARE_CHANCE = 10
 
-const SLOW_MO_THRESHOLD = 0.5
-const SLOW_MO_SCALE = 0.25
+export (float) var SLOW_MO_THRESHOLD = 0.5
+export (float) var SLOW_MO_SCALE = 0.25
 
 var COMMON_CHANCE = 100 - UNCOMMON_CHANCE - RARE_CHANCE
 var COMMON_FISH = [preload("res://fish/small_snout_shod.tscn"),
@@ -38,10 +38,6 @@ func reset():
 	for fish in get_tree().get_nodes_in_group("fish"):
 		fish.queue_free()
 	$GameTimer.start()
-	
-func reset_stage_2():
-	$Water/LeftSide/Player/AnimationPlayer.pause_mode = PAUSE_MODE_INHERIT
-	$Water/RightSide/Player/AnimationPlayer.pause_mode = PAUSE_MODE_INHERIT
 		
 func spawn_fish(side):
 	var fish
