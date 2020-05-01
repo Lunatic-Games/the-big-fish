@@ -49,9 +49,15 @@ func _process(delta):
 	if left_score < left_score_goal:
 		left_score = min(left_score + int(SCORE_INCREASE_RATE * delta), left_score_goal)
 		$TextureRect/Summaries/Left/Score.text = str(left_score)
+		$LeftMoneyPlayer.playing = true
+	else:
+		$LeftMoneyPlayer.playing = false
 	if right_score < right_score_goal:
 		right_score = min(right_score + int(SCORE_INCREASE_RATE * delta), right_score_goal)
 		$TextureRect/Summaries/Right/Score.text = str(right_score)
+		$RightMoneyPlayer.playing = true
+	else:
+		$RightMoneyPlayer.playing = false
 
 func add_fish(fish, stack, anim_sprite, animator):
 	var frames = fish.get_node("FishSprite").frames

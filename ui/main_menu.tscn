@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=2]
+[gd_scene load_steps=15 format=2]
 
 [ext_resource path="res://ui/menu_button.tscn" type="PackedScene" id=1]
 [ext_resource path="res://ui/main_menu.gd" type="Script" id=2]
@@ -7,11 +7,17 @@
 [ext_resource path="res://ui/title_the.png" type="Texture" id=5]
 [ext_resource path="res://sound_effects/menu_down.wav" type="AudioStream" id=6]
 [ext_resource path="res://sound_effects/menu_up.wav" type="AudioStream" id=7]
+[ext_resource path="res://ui/upheavtt.ttf" type="DynamicFontData" id=8]
 
 [sub_resource type="StyleBoxEmpty" id=1]
 
-[sub_resource type="Animation" id=2]
-resource_name = "exit"
+[sub_resource type="DynamicFont" id=2]
+size = 36
+outline_size = 1
+outline_color = Color( 0.196078, 0.196078, 0.196078, 1 )
+font_data = ExtResource( 8 )
+
+[sub_resource type="Animation" id=3]
 length = 0.5
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
@@ -40,7 +46,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=4]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
 tracks/0/interp = 1
@@ -54,7 +60,7 @@ tracks/0/keys = {
 "values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
 }
 
-[sub_resource type="Animation" id=4]
+[sub_resource type="Animation" id=5]
 tracks/0/type = "value"
 tracks/0/path = NodePath(".:modulate")
 tracks/0/interp = 1
@@ -82,7 +88,7 @@ tracks/1/keys = {
 } ]
 }
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=6]
 length = 3.0
 tracks/0/type = "value"
 tracks/0/path = NodePath("MarginContainer/VBoxContainer:visible")
@@ -230,6 +236,30 @@ tracks/11/keys = {
 "update": 0,
 "values": [ Color( 1, 1, 1, 1 ) ]
 }
+tracks/12/type = "value"
+tracks/12/path = NodePath("NamesContainer:visible")
+tracks/12/interp = 1
+tracks/12/loop_wrap = true
+tracks/12/imported = false
+tracks/12/enabled = true
+tracks/12/keys = {
+"times": PoolRealArray( 0, 2.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/13/type = "value"
+tracks/13/path = NodePath("NamesContainer:modulate")
+tracks/13/interp = 1
+tracks/13/loop_wrap = true
+tracks/13/imported = false
+tracks/13/enabled = true
+tracks/13/keys = {
+"times": PoolRealArray( 2.5, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ) ]
+}
 
 [node name="MainMenu" type="Control"]
 anchor_right = 1.0
@@ -262,7 +292,6 @@ margin_top = 178.0
 margin_right = 540.0
 margin_bottom = 453.0
 rect_min_size = Vector2( 0, 275 )
-rect_scale = Vector2( 1.4, 1.4 )
 rect_pivot_offset = Vector2( 162, 137 )
 texture = ExtResource( 3 )
 stretch_mode = 4
@@ -295,7 +324,6 @@ __meta__ = {
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
 visible = false
-modulate = Color( 1, 1, 1, 0 )
 margin_left = 75.0
 margin_top = 100.0
 margin_right = 351.0
@@ -307,36 +335,77 @@ __meta__ = {
 }
 
 [node name="SinglePlayerButton" parent="MarginContainer/VBoxContainer" instance=ExtResource( 1 )]
-margin_top = 184.0
-margin_right = 170.0
-margin_bottom = 217.0
+margin_top = 166.0
+margin_right = 276.0
+margin_bottom = 199.0
 custom_styles/hover = SubResource( 1 )
 text = "Single player"
 
 [node name="MultiplayerButton" parent="MarginContainer/VBoxContainer" instance=ExtResource( 1 )]
-margin_top = 184.0
-margin_right = 170.0
-margin_bottom = 217.0
+margin_top = 203.0
+margin_right = 276.0
+margin_bottom = 236.0
 custom_styles/hover = SubResource( 1 )
 text = "Multiplayer"
 
 [node name="SettingsButton" parent="MarginContainer/VBoxContainer" instance=ExtResource( 1 )]
-margin_top = 221.0
-margin_right = 170.0
-margin_bottom = 254.0
+margin_top = 240.0
+margin_right = 276.0
+margin_bottom = 273.0
 text = "Settings"
 
 [node name="ExitButton" parent="MarginContainer/VBoxContainer" instance=ExtResource( 1 )]
-margin_top = 258.0
-margin_right = 170.0
-margin_bottom = 291.0
+margin_top = 277.0
+margin_right = 276.0
+margin_bottom = 310.0
 text = "Exit"
 
+[node name="NamesContainer" type="VBoxContainer" parent="."]
+visible = false
+margin_left = 684.775
+margin_top = 417.546
+margin_right = 1002.78
+margin_bottom = 561.546
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Joe" type="Label" parent="NamesContainer"]
+margin_right = 318.0
+margin_bottom = 33.0
+custom_fonts/font = SubResource( 2 )
+text = "Joe Zlonicky"
+align = 2
+
+[node name="Matthias" type="Label" parent="NamesContainer"]
+margin_top = 37.0
+margin_right = 318.0
+margin_bottom = 70.0
+custom_fonts/font = SubResource( 2 )
+text = "Matthias Harden"
+align = 2
+
+[node name="Noah" type="Label" parent="NamesContainer"]
+margin_top = 74.0
+margin_right = 318.0
+margin_bottom = 107.0
+custom_fonts/font = SubResource( 2 )
+text = "Noah Jacobsen"
+align = 2
+
+[node name="Davis" type="Label" parent="NamesContainer"]
+margin_top = 111.0
+margin_right = 318.0
+margin_bottom = 144.0
+custom_fonts/font = SubResource( 2 )
+text = "Davis Carlson"
+align = 2
+
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-anims/exit = SubResource( 2 )
-anims/fade_in = SubResource( 3 )
-anims/fade_out = SubResource( 4 )
-anims/intro = SubResource( 5 )
+anims/exit = SubResource( 3 )
+anims/fade_in = SubResource( 4 )
+anims/fade_out = SubResource( 5 )
+anims/intro = SubResource( 6 )
 
 [node name="AcceptSFX" type="AudioStreamPlayer" parent="."]
 stream = ExtResource( 7 )

@@ -8,7 +8,7 @@ export (bool) var line_cast = false
 const MIN_CAST_DISTANCE = 20
 const MAX_CAST_DISTANCE = 250
 const CHARGE_RATE = 100
-const AXIS_THRESHOLD = 0.9
+const AXIS_THRESHOLD = 0.7
 const REEL_SPEED = 750
 const BOBBER_PULL = 150
 

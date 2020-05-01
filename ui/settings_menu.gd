@@ -7,7 +7,7 @@ const SLIDER_JUMP = 5
 
 var music_slider_held = false
 var sfx_slider_held = false
-var bus_layout = preload("res://default_bus_layout.tres")
+var bus_layout = preload("res://audio_settings.tres")
 
 func _ready():
 	$VBoxContainer/FullscreenContainer/CheckBox.pressed = OS.window_fullscreen
@@ -57,14 +57,14 @@ func update_music():
 		/ $VBoxContainer/MusicContainer/HSlider.max_value)
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"),
 		linear2db(value))
-	var _err = ResourceSaver.save("default_bus_layout.tres", AudioServer.generate_bus_layout())
+	var _err = ResourceSaver.save("audio_settings.tres", AudioServer.generate_bus_layout())
 		
 func update_sfx():
 	var value = ($VBoxContainer/SFXContainer/HSlider.value 
 		/ $VBoxContainer/SFXContainer/HSlider.max_value)
 	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"),
 		linear2db(value))
-	var _err = ResourceSaver.save("default_bus_layout.tres", AudioServer.generate_bus_layout())
+	var _err = ResourceSaver.save("audio_settings.tres", AudioServer.generate_bus_layout())
 
 # Toggle fullscreen
 func _on_Fullscreen_pressed():

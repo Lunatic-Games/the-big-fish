@@ -12,7 +12,7 @@ export (float) var SLOW_MO_SCALE = 0.25
 
 var COMMON_CHANCE = 100 - UNCOMMON_CHANCE - RARE_CHANCE - SUPER_RARE_CHANCE
 
-var debug = true
+var debug = false
 var DEBUG_FISH = [preload("res://fish/cthuli.tscn")]
 
 var COMMON_FISH = [preload("res://fish/small_snout_shod.tscn"),
