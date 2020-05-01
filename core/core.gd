@@ -10,7 +10,8 @@ func _ready():
 	#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _process(_delta):
-	if $AnimationPlayer.current_animation == "intro":
+	if ($AnimationPlayer.current_animation == "intro" || 
+			$AnimationPlayer.current_animation == "intro_single"):
 		if Input.is_action_just_pressed("ui_accept"):
 			if $AnimationPlayer.playback_speed > 0:
 				$AnimationPlayer.playback_speed = 8
@@ -26,8 +27,11 @@ func _on_play_game():
 	if $MainMenu.single_player:
 		$AnimationPlayer.play("intro_single", 0, 1)
 		$LeftSide/Viewport/Game/Water/RightSide/Player.set_process(false)
+		$SummaryMenu/TextureRect/Summaries/Right.visible = false
 	else:
 		$AnimationPlayer.play("intro", 0, 1)
+		$LeftSide/Viewport/Game/Water/RightSide/Player.set_process(true)
+		$SummaryMenu/TextureRect/Summaries/Right.visible = true
 	$AnimationPlayer.queue("countdown")
 
 # Show settings
@@ -72,10 +76,10 @@ func _on_Game_paused():
 	$PauseMenu/MarginContainer/VBoxContainer/ContinueButton.grab_focus()
 
 func _on_Game_finished():
-	$Summary.visible = true
-	$Summary.game_finished($LeftSide/Viewport/Game/Water/LeftSide/Player.fish_caught,
+	$SummaryMenu.visible = true
+	$SummaryMenu.game_finished($LeftSide/Viewport/Game/Water/LeftSide/Player.fish_caught,
 		$LeftSide/Viewport/Game/Water/RightSide/Player.fish_caught)
-	$Summary/AnimationPlayer.play("scroll_in")
+	$SummaryMenu/AnimationPlayer.play("scroll_in")
 	$GameMusicFader.play("fade_out")
 
 # Show mainmenu when doing outro

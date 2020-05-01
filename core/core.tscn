@@ -8,7 +8,7 @@
 [ext_resource path="res://core/split.png" type="Texture" id=6]
 [ext_resource path="res://ui/clock.png" type="Texture" id=7]
 [ext_resource path="res://ui/upheavtt.ttf" type="DynamicFontData" id=8]
-[ext_resource path="res://ui/summary.tscn" type="PackedScene" id=9]
+[ext_resource path="res://ui/summary_menu.tscn" type="PackedScene" id=9]
 [ext_resource path="res://sound_effects/start_beep_3.wav" type="AudioStream" id=10]
 [ext_resource path="res://sound_effects/start_beep_2.wav" type="AudioStream" id=11]
 [ext_resource path="res://sound_effects/start_beep_1.wav" type="AudioStream" id=12]
@@ -313,7 +313,7 @@ tracks/10/keys = {
 "values": [ 0.0, -20.0, -30.0, -80.0 ]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id=6]
 resource_name = "intro_single"
 length = 6.5
 tracks/0/type = "value"
@@ -592,7 +592,7 @@ visible = false
 margin_right = 1024.0
 margin_bottom = 576.0
 
-[node name="Summary" parent="." instance=ExtResource( 9 )]
+[node name="SummaryMenu" parent="." instance=ExtResource( 9 )]
 pause_mode = 2
 visible = false
 margin_right = 1024.0
@@ -603,7 +603,7 @@ autoplay = "fade_in"
 anims/countdown = SubResource( 3 )
 anims/fade_in = SubResource( 4 )
 anims/intro = SubResource( 5 )
-anims/intro_single = SubResource( 8 )
+anims/intro_single = SubResource( 6 )
 
 [node name="BlackRect" type="ColorRect" parent="."]
 anchor_right = 1.0
@@ -642,7 +642,7 @@ stream = ExtResource( 16 )
 [connection signal="go_to_settings" from="MainMenu" to="." method="_go_to_settings"]
 [connection signal="play_game" from="MainMenu" to="." method="_on_play_game"]
 [connection signal="go_back" from="SettingsMenu" to="." method="_return_from_settings"]
-[connection signal="play_again" from="Summary" to="." method="_on_Summary_play_again"]
-[connection signal="return_to_main_menu" from="Summary" to="." method="_return_to_main_menu"]
+[connection signal="play_again" from="SummaryMenu" to="." method="_on_Summary_play_again"]
+[connection signal="return_to_main_menu" from="SummaryMenu" to="." method="_return_to_main_menu"]
 
 [editable path="LeftSide/Viewport/Game"]

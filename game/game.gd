@@ -3,17 +3,27 @@ extends Node2D
 signal paused  # Show pause menu
 signal finished
 
-export (int) var UNCOMMON_CHANCE = 30
+export (int) var UNCOMMON_CHANCE = 35
 export (int) var RARE_CHANCE = 10
+export (int) var SUPER_RARE_CHANCE = 3
 
 export (float) var SLOW_MO_THRESHOLD = 0.5
 export (float) var SLOW_MO_SCALE = 0.25
 
-var COMMON_CHANCE = 100 - UNCOMMON_CHANCE - RARE_CHANCE
+var COMMON_CHANCE = 100 - UNCOMMON_CHANCE - RARE_CHANCE - SUPER_RARE_CHANCE
 var COMMON_FISH = [preload("res://fish/small_snout_shod.tscn"),
-	preload("res://fish/sapphire_jack.tscn")]
-var UNCOMMON_FISH = [preload("res://fish/three_eyed_warbler.tscn")]
-var RARE_FISH = [preload("res://fish/glowing_gandersnatch.tscn")]
+	preload("res://fish/sapphire_jack.tscn"),
+	preload("res://fish/electric_eel.tscn")]
+var UNCOMMON_FISH = [preload("res://fish/three_eyed_warbler.tscn"),
+	preload("res://fish/plated_pickerel.tscn"),
+	preload("res://fish/sanguine_squid.tscn")]
+var RARE_FISH = [preload("res://fish/glowing_gandersnatch.tscn"),
+	preload("res://fish/bearded_clam.tscn"),
+	preload("res://fish/eldritch_eel.tscn")
+	]
+var SUPER_RARE_FISH = [preload("res://fish/neptunian_narfish.tscn"),
+	preload("res://fish/cthuli.tscn")
+]
 
 func start():
 	get_tree().paused = false
@@ -46,8 +56,10 @@ func spawn_fish(side):
 		fish = COMMON_FISH[randi() % COMMON_FISH.size()].instance()
 	elif rarity < COMMON_CHANCE + UNCOMMON_CHANCE:
 		fish = UNCOMMON_FISH[randi() % UNCOMMON_FISH.size()].instance()
-	else:
+	elif rarity < COMMON_CHANCE + UNCOMMON_CHANCE + RARE_CHANCE:
 		fish = RARE_FISH[randi() % RARE_FISH.size()].instance()	
+	else:
+		fish = SUPER_RARE_FISH[randi() % SUPER_RARE_FISH.size()].instance()
 	var fish_area
 	if side == "left":
 		fish_area = $Water/LeftSide/FishArea
