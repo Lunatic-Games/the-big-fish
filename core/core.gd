@@ -5,12 +5,13 @@ var returning_to_main_menu = false
 # Begin at main menu
 func _ready():
 	get_tree().paused = true
-	$MainMenu/MarginContainer/VBoxContainer/PlayButton.grab_focus()
+	$MainMenu/MarginContainer/VBoxContainer/SinglePlayerButton.grab_focus()
 	$RightSide/Viewport.world_2d = $LeftSide/Viewport.world_2d
 	#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
 func _process(_delta):
-	if $AnimationPlayer.current_animation == "intro":
+	if ($AnimationPlayer.current_animation == "intro" || 
+			$AnimationPlayer.current_animation == "intro_single"):
 		if Input.is_action_just_pressed("ui_accept"):
 			if $AnimationPlayer.playback_speed > 0:
 				$AnimationPlayer.playback_speed = 8
@@ -23,7 +24,14 @@ func _process(_delta):
 
 # Start intro transition
 func _on_play_game():
-	$AnimationPlayer.play("intro", 0, 1)
+	if $MainMenu.single_player:
+		$AnimationPlayer.play("intro_single", 0, 1)
+		$LeftSide/Viewport/Game/Water/RightSide/Player.set_process(false)
+		$SummaryMenu/TextureRect/Summaries/Right.visible = false
+	else:
+		$AnimationPlayer.play("intro", 0, 1)
+		$LeftSide/Viewport/Game/Water/RightSide/Player.set_process(true)
+		$SummaryMenu/TextureRect/Summaries/Right.visible = true
 	$AnimationPlayer.queue("countdown")
 
 # Show settings
@@ -34,6 +42,7 @@ func _go_to_settings():
 # Return to previous menu
 func _return_from_settings():
 	if $PauseMenu.visible:
+		$PauseMenu.ignore_back = true
 		$PauseMenu/MarginContainer.visible = true
 		$PauseMenu/MarginContainer/VBoxContainer/SettingsButton.grab_focus()
 	else:
@@ -42,33 +51,43 @@ func _return_from_settings():
 	
 # Start outro transition
 func _return_to_main_menu():
+	$InGameMusic.stream_paused = false
+	$GameMusicFader.play("fade_out")
 	returning_to_main_menu = true
 	$Countdown.visible = false
 	$AnimationPlayer.playback_active = true
 	get_tree().paused = true
-	$AnimationPlayer.play("intro", 0, -2, true)
+	if $MainMenu.single_player:
+		$AnimationPlayer.play("intro_single", 0, -2, true)
+	else:
+		$AnimationPlayer.play("intro", 0, -2, true)
 
 # Game has resumed
 func _on_continue_game():
 	$AnimationPlayer.playback_active = true
+	$InGameMusic.stream_paused = false
 
 # Show pause menu
 func _on_Game_paused():
+	$InGameMusic.stream_paused = true
 	$PauseMenu.visible = true
 	$PauseMenu.ignore_pause = true
 	$AnimationPlayer.playback_active = false
 	$PauseMenu/MarginContainer/VBoxContainer/ContinueButton.grab_focus()
 
 func _on_Game_finished():
-	$Summary.visible = true
-	$Summary/AnimationPlayer.play("scroll_in")
+	$SummaryMenu.visible = true
+	$SummaryMenu.game_finished($LeftSide/Viewport/Game/Water/LeftSide/Player.fish_caught,
+		$LeftSide/Viewport/Game/Water/RightSide/Player.fish_caught)
+	$SummaryMenu/AnimationPlayer.play("scroll_in")
+	$GameMusicFader.play("fade_out")
 
 # Show mainmenu when doing outro
 func intro_start():
 	if returning_to_main_menu:
 		returning_to_main_menu = false
 		$MainMenu.visible = true
-		$MainMenu/MarginContainer/VBoxContainer/PlayButton.grab_focus()
+		$MainMenu/MarginContainer/VBoxContainer/SinglePlayerButton.grab_focus()
 		$MainMenu/AnimationPlayer.play("fade_in")
 		$LeftSide/Viewport/Game.reset()
 	else:
@@ -91,4 +110,9 @@ func _on_Summary_play_again():
 	$LeftSide/Viewport/Game.reset()
 	$Clock/Label.text = str(int($LeftSide/Viewport/Game/GameTimer.wait_time))
 	$AnimationPlayer.play("countdown")
+	
+func play_slap():
+	if returning_to_main_menu:
+		return
+	$SlapSFX.play()
 	

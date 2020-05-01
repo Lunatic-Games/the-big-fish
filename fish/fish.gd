@@ -6,12 +6,8 @@ signal broke_free
 export (String) var side
 export (int) var SPEED = 50
 export (int) var RUN_AWAY_SPEED = 75
+export (int) var POINTS = 1000
 export (Vector2) var TEXTURE_SIZE
-
-var on_hook = false
-var shown_button
-var velocity = Vector2(1, 0)
-var combo_angle = [0, 0]
 
 const VERTICAL_MAX = 0.45  # Vertical movement will be in range (-VM, VM)
 const BUTTONS = ["AButton", "BButton", "XButton", "YButton"]
@@ -19,6 +15,12 @@ const HOOK_SIGHT_RANGE = 50
 const ANGLE_RANGE = PI / 3
 const INDICATOR_RADIUS = 40
 const INDICATOR_COLOR = Color(1.0, 0.0, 0.0, 0.5)
+
+var on_hook = false
+var shown_button
+var velocity = Vector2(1, 0)
+var combo_angle = [0, 0]
+
 
 # Start with a random velocity
 func _ready():

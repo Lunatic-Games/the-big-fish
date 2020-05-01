@@ -7,34 +7,68 @@ const SLIDER_JUMP = 5
 
 var music_slider_held = false
 var sfx_slider_held = false
+var bus_layout = preload("res://default_bus_layout.tres")
 
 func _ready():
 	$VBoxContainer/FullscreenContainer/CheckBox.pressed = OS.window_fullscreen
+	
+	AudioServer.set_bus_layout(bus_layout)
+	
+	var music_level = AudioServer.get_bus_volume_db(AudioServer.get_bus_index("Music"))
+	var music_level_lin = db2linear(music_level)
+	var music_slider = $VBoxContainer/MusicContainer/HSlider
+	music_slider.value = music_slider.max_value * music_level_lin
+	
+	var sfx_level = AudioServer.get_bus_volume_db(AudioServer.get_bus_index("SFX"))
+	var sfx_level_lin = db2linear(sfx_level)
+	var sfx_slider = $VBoxContainer/SFXContainer/HSlider
+	sfx_slider.value = sfx_slider.max_value * sfx_level_lin
 
 # Handle slider scrolling and keypresses
 func _process(delta):
+	if !visible:
+		return
 	if music_slider_held:
 		if Input.is_action_pressed("ui_right"):
-			$VBoxContainer/MusicContainer/HSlider.value += SLIDER_SPEED * delta 
+			$VBoxContainer/MusicContainer/HSlider.value += SLIDER_SPEED * delta
+			update_music()
 		if Input.is_action_pressed("ui_left"):
 			$VBoxContainer/MusicContainer/HSlider.value -= SLIDER_SPEED * delta
+			update_music()
 	if sfx_slider_held:
 		if Input.is_action_pressed("ui_right"):
 			$VBoxContainer/SFXContainer/HSlider.value += SLIDER_SPEED * delta 
 		if Input.is_action_pressed("ui_left"):
 			$VBoxContainer/SFXContainer/HSlider.value -= SLIDER_SPEED * delta
 			
-	if visible and Input.is_action_just_pressed("ui_cancel"):
+	if Input.is_action_just_pressed("ui_cancel"):
+		$BackSFX.play()
 		visible = false
 		emit_signal("go_back")
 
 # Return to previous menu
 func _on_BackButton_pressed():
+	$BackSFX.play()
 	visible = false
 	emit_signal("go_back")
 
+func update_music():
+	var value = ($VBoxContainer/MusicContainer/HSlider.value 
+		/ $VBoxContainer/MusicContainer/HSlider.max_value)
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("Music"),
+		linear2db(value))
+	var _err = ResourceSaver.save("default_bus_layout.tres", AudioServer.generate_bus_layout())
+		
+func update_sfx():
+	var value = ($VBoxContainer/SFXContainer/HSlider.value 
+		/ $VBoxContainer/SFXContainer/HSlider.max_value)
+	AudioServer.set_bus_volume_db(AudioServer.get_bus_index("SFX"),
+		linear2db(value))
+	var _err = ResourceSaver.save("default_bus_layout.tres", AudioServer.generate_bus_layout())
+
 # Toggle fullscreen
 func _on_Fullscreen_pressed():
+	$AcceptSFX.play()
 	var check_box = get_node("VBoxContainer/FullscreenContainer/CheckBox")
 	check_box.pressed = !check_box.pressed
 	OS.window_fullscreen = !OS.window_fullscreen
@@ -75,6 +109,7 @@ func _on_Music_HSlider_gui_input(_event):
 	var timer = get_node("VBoxContainer/MusicContainer/HoldTimer")
 	var slider = get_node("VBoxContainer/MusicContainer/HSlider")
 	handle_slider_logic(timer, slider, "music_slider_held")
+	update_music()
 
 # Count as holding after timeout
 func _on_Music_HoldTimer_timeout():
@@ -85,6 +120,7 @@ func _on_SFX_HSlider_gui_input(_event):
 	var timer = get_node("VBoxContainer/SFXContainer/HoldTimer")
 	var slider = get_node("VBoxContainer/SFXContainer/HSlider")
 	handle_slider_logic(timer, slider, "sfx_slider_held")
+	update_sfx()
 
 # Count as holding after timeout
 func _on_SFX_HoldTimer_timeout():
@@ -94,9 +130,11 @@ func _on_SFX_HoldTimer_timeout():
 func handle_slider_logic(timer, slider, toggle_name):
 	if Input.is_action_just_pressed("ui_right") and timer.is_stopped():
 		timer.start()
+		$AcceptSFX.play()
 		slider.value += SLIDER_JUMP
 	if Input.is_action_just_pressed("ui_left") and timer.is_stopped():
 		timer.start()
+		$AcceptSFX.play()
 		slider.value -= SLIDER_JUMP
 	if Input.is_action_just_released("ui_left") and !Input.is_action_pressed("ui_right"):
 		timer.stop()

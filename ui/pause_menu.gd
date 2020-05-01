@@ -5,9 +5,10 @@ signal go_to_settings
 signal go_to_main_menu
 
 var ignore_pause = true
+var ignore_back = false
 
 func _process(_delta):
-	if !visible:
+	if !visible or !$MarginContainer.visible:
 		return
 	if Input.is_action_just_pressed("pause"):
 		if ignore_pause:
@@ -19,12 +20,14 @@ func _process(_delta):
 		
 # Unpause game
 func _on_ContinueButton_pressed():
+	$AcceptSFX.play()
 	visible = false
 	get_tree().paused = false
 	emit_signal("continue_game")
 
 # Go to settings
 func _on_SettingsButton_pressed():
+	$AcceptSFX.play()
 	$MarginContainer.visible = false
 	emit_signal("go_to_settings")
 
@@ -34,5 +37,6 @@ func unpause():
 
 # Transition to main menu
 func _on_ReturnToMainMenuButton_pressed():
+	$AcceptSFX.play()
 	visible = false
 	emit_signal("go_to_main_menu")

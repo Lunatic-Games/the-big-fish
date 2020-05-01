@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://game/game.tscn" type="PackedScene" id=1]
 [ext_resource path="res://core/core.gd" type="Script" id=2]
@@ -8,17 +8,24 @@
 [ext_resource path="res://core/split.png" type="Texture" id=6]
 [ext_resource path="res://ui/clock.png" type="Texture" id=7]
 [ext_resource path="res://ui/upheavtt.ttf" type="DynamicFontData" id=8]
-[ext_resource path="res://ui/summary.tscn" type="PackedScene" id=9]
+[ext_resource path="res://ui/summary_menu.tscn" type="PackedScene" id=9]
+[ext_resource path="res://sound_effects/start_beep_3.wav" type="AudioStream" id=10]
+[ext_resource path="res://sound_effects/start_beep_2.wav" type="AudioStream" id=11]
+[ext_resource path="res://sound_effects/start_beep_1.wav" type="AudioStream" id=12]
+[ext_resource path="res://sound_effects/start_beep_go.wav" type="AudioStream" id=13]
+[ext_resource path="res://music/main_menu.wav" type="AudioStream" id=14]
+[ext_resource path="res://music/in_game.wav" type="AudioStream" id=15]
+[ext_resource path="res://sound_effects/slap.wav" type="AudioStream" id=16]
 
 [sub_resource type="DynamicFont" id=1]
 size = 36
 font_data = ExtResource( 8 )
 
-[sub_resource type="DynamicFont" id=4]
+[sub_resource type="DynamicFont" id=2]
 size = 64
 font_data = ExtResource( 8 )
 
-[sub_resource type="Animation" id=5]
+[sub_resource type="Animation" id=3]
 resource_name = "countdown"
 length = 4.0
 tracks/0/type = "value"
@@ -71,9 +78,56 @@ tracks/3/keys = {
 "update": 0,
 "values": [ Vector2( 1.5, 2 ), Vector2( 1, 1 ), Vector2( 1.5, 2 ), Vector2( 1, 1 ), Vector2( 1.5, 2 ), Vector2( 1, 1 ), Vector2( 3, 3 ), Vector2( 1, 1 ) ]
 }
+tracks/4/type = "value"
+tracks/4/path = NodePath("CountdownPlayer:stream")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 1, 2, 3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("CountdownPlayer:playing")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 1, 2, 3, 3.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ true, true, true, true, false ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("InGameMusic:volume_db")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 2.9, 3 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ -80.0, 0.0 ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("InGameMusic:playing")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 3 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ true ]
+}
 
-[sub_resource type="Animation" id=2]
-resource_name = "fade_in"
+[sub_resource type="Animation" id=4]
 tracks/0/type = "value"
 tracks/0/path = NodePath("BlackRect:modulate")
 tracks/0/interp = 1
@@ -113,7 +167,7 @@ tracks/2/keys = {
 "values": [ true ]
 }
 
-[sub_resource type="Animation" id=3]
+[sub_resource type="Animation" id=5]
 length = 6.5
 tracks/0/type = "value"
 tracks/0/path = NodePath("LeftSide/Viewport/Camera2D:position")
@@ -230,15 +284,193 @@ tracks/9/loop_wrap = true
 tracks/9/imported = false
 tracks/9/enabled = true
 tracks/9/keys = {
-"times": PoolRealArray( 0, 6.5 ),
-"transitions": PoolRealArray( 1, 1 ),
+"times": PoolRealArray( 0, 4.3, 4.6, 6.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
 "values": [ {
 "args": [  ],
 "method": "intro_start"
 }, {
 "args": [  ],
+"method": "play_slap"
+}, {
+"args": [  ],
+"method": "play_slap"
+}, {
+"args": [  ],
 "method": "intro_end"
 } ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("MainMenuMusic:volume_db")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0, 3.3, 3.7, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -20.0, -30.0, -80.0 ]
+}
+
+[sub_resource type="Animation" id=6]
+resource_name = "intro_single"
+length = 6.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("LeftSide/Viewport/Camera2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 4, 4.9, 6.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -256, -150 ), Vector2( -256, 512 ), Vector2( -256, 512 ), Vector2( -768, 512 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("RightSide/Viewport/Camera2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 4, 4.9, 6.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 256, -150 ), Vector2( 256, 512 ), Vector2( 256, 512 ), Vector2( -256, 512 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("LeftSide/Viewport/Game/MountainsLeft:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 4.9, 6.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -384, -18 ), Vector2( -384, -18 ), Vector2( -640, -18 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("LeftSide/Viewport/Game/MountainsRight:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 4.9, 6.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 384, -18 ), Vector2( 384, -18 ), Vector2( 124, -18 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("LeftSide/Viewport/Game/ForestLeft:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 4, 4.9, 6.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -448, 200 ), Vector2( -448, 120 ), Vector2( -448, 120 ), Vector2( -576, 120 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("LeftSide/Viewport/Game/ForestRight:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 4, 4.9, 6.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 448, 200 ), Vector2( 448, 120 ), Vector2( 448, 120 ), Vector2( 320, 120 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("LeftSide/Viewport/Game/Water:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 4, 6.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 600 ), Vector2( 0, 520 ), Vector2( 0, 520 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Clock:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 4.2, 4.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/8/type = "method"
+tracks/8/path = NodePath(".")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 4.6, 6.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "intro_start"
+}, {
+"args": [  ],
+"method": "play_slap"
+}, {
+"args": [  ],
+"method": "intro_end"
+} ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("MainMenuMusic:volume_db")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 3.3, 3.7, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -20.0, -30.0, -80.0 ]
+}
+
+[sub_resource type="Animation" id=7]
+resource_name = "fade_out"
+length = 2.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("InGameMusic:volume_db")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.1, 1.7, 2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -20.0, -30.0, -80.0 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("InGameMusic:playing")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 2 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ false ]
 }
 
 [node name="Core" type="Node2D"]
@@ -248,6 +480,7 @@ script = ExtResource( 2 )
 [node name="LeftSide" type="ViewportContainer" parent="."]
 anchor_bottom = 1.0
 margin_right = 512.0
+margin_bottom = 576.0
 __meta__ = {
 "_edit_use_anchors_": false
 }
@@ -337,7 +570,7 @@ margin_right = 553.321
 margin_bottom = 90.7351
 rect_scale = Vector2( 1.5, 2 )
 rect_pivot_offset = Vector2( 35, 32 )
-custom_fonts/font = SubResource( 4 )
+custom_fonts/font = SubResource( 2 )
 text = "3"
 align = 1
 __meta__ = {
@@ -359,19 +592,20 @@ visible = false
 margin_right = 1024.0
 margin_bottom = 576.0
 
-[node name="Summary" parent="." instance=ExtResource( 9 )]
+[node name="SummaryMenu" parent="." instance=ExtResource( 9 )]
 pause_mode = 2
+visible = false
 margin_right = 1024.0
 margin_bottom = 576.0
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "fade_in"
-anims/countdown = SubResource( 5 )
-anims/fade_in = SubResource( 2 )
-anims/intro = SubResource( 3 )
+anims/countdown = SubResource( 3 )
+anims/fade_in = SubResource( 4 )
+anims/intro = SubResource( 5 )
+anims/intro_single = SubResource( 6 )
 
 [node name="BlackRect" type="ColorRect" parent="."]
-visible = false
 anchor_right = 1.0
 anchor_bottom = 1.0
 rect_min_size = Vector2( 1024, 576 )
@@ -379,6 +613,27 @@ color = Color( 0, 0, 0, 1 )
 __meta__ = {
 "_edit_use_anchors_": false
 }
+
+[node name="CountdownPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 10 )
+volume_db = -10.0
+bus = "SFX"
+
+[node name="MainMenuMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 14 )
+autoplay = true
+bus = "Music"
+
+[node name="InGameMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 15 )
+volume_db = -80.0
+bus = "Music"
+
+[node name="GameMusicFader" type="AnimationPlayer" parent="."]
+anims/fade_out = SubResource( 7 )
+
+[node name="SlapSFX" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 16 )
 [connection signal="finished" from="LeftSide/Viewport/Game" to="." method="_on_Game_finished"]
 [connection signal="paused" from="LeftSide/Viewport/Game" to="." method="_on_Game_paused"]
 [connection signal="continue_game" from="PauseMenu" to="." method="_on_continue_game"]
@@ -387,7 +642,7 @@ __meta__ = {
 [connection signal="go_to_settings" from="MainMenu" to="." method="_go_to_settings"]
 [connection signal="play_game" from="MainMenu" to="." method="_on_play_game"]
 [connection signal="go_back" from="SettingsMenu" to="." method="_return_from_settings"]
-[connection signal="play_again" from="Summary" to="." method="_on_Summary_play_again"]
-[connection signal="return_to_main_menu" from="Summary" to="." method="_return_to_main_menu"]
+[connection signal="play_again" from="SummaryMenu" to="." method="_on_Summary_play_again"]
+[connection signal="return_to_main_menu" from="SummaryMenu" to="." method="_return_to_main_menu"]
 
 [editable path="LeftSide/Viewport/Game"]
