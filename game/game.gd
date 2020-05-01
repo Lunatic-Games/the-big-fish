@@ -5,12 +5,16 @@ signal finished
 
 export (int) var UNCOMMON_CHANCE = 35
 export (int) var RARE_CHANCE = 10
-export (int) var SUPER_RARE_CHANCE = 3
+export (int) var SUPER_RARE_CHANCE = 1
 
 export (float) var SLOW_MO_THRESHOLD = 0.5
 export (float) var SLOW_MO_SCALE = 0.25
 
 var COMMON_CHANCE = 100 - UNCOMMON_CHANCE - RARE_CHANCE - SUPER_RARE_CHANCE
+
+var debug = false
+var DEBUG_FISH = [preload("res://fish/cthuli.tscn")]
+
 var COMMON_FISH = [preload("res://fish/small_snout_shod.tscn"),
 	preload("res://fish/sapphire_jack.tscn"),
 	preload("res://fish/electric_eel.tscn")]
@@ -19,11 +23,11 @@ var UNCOMMON_FISH = [preload("res://fish/three_eyed_warbler.tscn"),
 	preload("res://fish/sanguine_squid.tscn")]
 var RARE_FISH = [preload("res://fish/glowing_gandersnatch.tscn"),
 	preload("res://fish/bearded_clam.tscn"),
-	preload("res://fish/eldritch_eel.tscn")
-	]
+	preload("res://fish/eldritch_eel.tscn")]
 var SUPER_RARE_FISH = [preload("res://fish/neptunian_narfish.tscn"),
-	preload("res://fish/cthuli.tscn")
-]
+	preload("res://fish/cthuli.tscn")]
+
+
 
 func start():
 	get_tree().paused = false
@@ -37,6 +41,8 @@ func _process(_delta):
 	if Input.is_action_just_pressed("pause") and $GameTimer.time_left > SLOW_MO_THRESHOLD:
 		Engine.time_scale = 1
 		get_tree().paused = true
+		Input.stop_joy_vibration(0)
+		Input.stop_joy_vibration(1)
 		emit_signal("paused")
 		
 	if $GameTimer.time_left <= SLOW_MO_THRESHOLD:
@@ -52,7 +58,9 @@ func reset():
 func spawn_fish(side):
 	var fish
 	var rarity = randi() % 100
-	if rarity < COMMON_CHANCE:
+	if debug:
+		fish = DEBUG_FISH[randi() % DEBUG_FISH.size()].instance()
+	elif rarity < COMMON_CHANCE:
 		fish = COMMON_FISH[randi() % COMMON_FISH.size()].instance()
 	elif rarity < COMMON_CHANCE + UNCOMMON_CHANCE:
 		fish = UNCOMMON_FISH[randi() % UNCOMMON_FISH.size()].instance()

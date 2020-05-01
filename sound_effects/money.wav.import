@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/money.wav-fe8ac6d2c8d0b738cdd51f2126a38c44.sample"
+
+[deps]
+
+source_file="res://sound_effects/money.wav"
+dest_files=[ "res://.import/money.wav-fe8ac6d2c8d0b738cdd51f2126a38c44.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=true
+compress/mode=0

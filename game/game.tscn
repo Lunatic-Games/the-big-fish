@@ -60,7 +60,7 @@ playing = true
 [node name="LeftSide" type="Node2D" parent="Water"]
 
 [node name="Player" parent="Water/LeftSide" instance=ExtResource( 3 )]
-position = Vector2( -958.403, 41.5307 )
+position = Vector2( -960.403, 48 )
 
 [node name="FishArea" type="Area2D" parent="Water/LeftSide" groups=[
 "fish_area",
@@ -91,7 +91,7 @@ __meta__ = {
 [node name="RightSide" type="Node2D" parent="Water"]
 
 [node name="Player" parent="Water/RightSide" instance=ExtResource( 3 )]
-position = Vector2( 960.194, 40.8427 )
+position = Vector2( 960.194, 48 )
 scale = Vector2( -1, 1 )
 side = "right"
 
@@ -122,6 +122,6 @@ __meta__ = {
 }
 
 [node name="GameTimer" type="Timer" parent="."]
-wait_time = 10.0
+wait_time = 120.0
 one_shot = true
 [connection signal="timeout" from="GameTimer" to="." method="_on_GameTimer_timeout"]

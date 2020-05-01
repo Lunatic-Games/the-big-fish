@@ -123,7 +123,7 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
-TEXTURE_SIZE = Vector2( 20, 10 )
+TEXTURE_SIZE = Vector2( 16, 16 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 modulate = Color( 0.941176, 0.941176, 0.941176, 1 )
@@ -141,7 +141,7 @@ wait_time = 4.0
 autostart = true
 
 [node name="ButtonPopupTimer" type="Timer" parent="."]
-wait_time = 2.5
+wait_time = 2.0
 one_shot = true
 
 [node name="Button" type="Sprite" parent="."]
