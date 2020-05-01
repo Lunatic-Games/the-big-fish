@@ -134,7 +134,6 @@ shape = SubResource( 1 )
 [node name="ShadowSprite" type="AnimatedSprite" parent="."]
 modulate = Color( 1, 1, 1, 0 )
 frames = SubResource( 4 )
-frame = 1
 playing = true
 
 [node name="DirectionTimer" type="Timer" parent="."]
@@ -181,7 +180,6 @@ anims/fade_out = SubResource( 7 )
 [node name="FishSprite" type="AnimatedSprite" parent="."]
 visible = false
 frames = SubResource( 10 )
-frame = 1
 playing = true
 offset = Vector2( -15, 0 )
 [connection signal="timeout" from="DirectionTimer" to="." method="_on_DirectionTimer_timeout"]

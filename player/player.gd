@@ -17,6 +17,8 @@ var device_id
 var last_reel_rot = null
 var fish_on_line = null
 
+var fish_caught = []
+
 func _ready():
 	if side == "left":
 		device_id = 0
@@ -46,6 +48,9 @@ func _physics_process(delta):
 		
 	
 func reset():
+	$ReelingSFX.stop()
+	fish_caught.clear()
+	set_texture("idle")
 	$AnimationPlayer.play("idle")
 	$AnimationPlayer.advance(0)
 	$Hook.in_water = false
@@ -108,16 +113,19 @@ func cast_line():
 	Input.stop_joy_vibration(device_id)
 
 func _on_fish_hooked(_fish):
+	$ReelingSFX.play()
 	$AnimationPlayer.play("reeling")
 	fish_on_line = _fish
 	fish_on_line.connect("broke_free", self, "_on_fish_broke_free")
 	
 func _on_CatchArea_entered(area):
 	if area.is_in_group("fish"):
+		$ReelingSFX.stop()
 		$FishShadow.frames = area.get_node("ShadowSprite").frames
 		$FishShadow.offset.x = -area.TEXTURE_SIZE.x / 2
 		$CaughtFish.frames = area.get_node("FishSprite").frames
 		$CaughtFish.offset.x = area.get_node("FishSprite").offset.x
+		fish_caught.append(area.duplicate())
 		area.catch()
 		fish_on_line = null
 		$Hook.hooked_fish = null
@@ -152,9 +160,12 @@ func _on_SplashAnimation_finished():
 	
 func set_texture(anim_name):
 	texture = load("res://player/" + anim_name + "_" + side + ".png")
+	update()
 
 func _on_fish_broke_free():
+	$ReelingSFX.stop()
 	$Hook.hooked_fish = null
+	$Hook.visible = true
 	fish_on_line.disconnect("broke_free", self, "_on_fish_broke_free")
 	fish_on_line = null
 	idle = true

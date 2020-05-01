@@ -1,9 +1,18 @@
 extends Node2D
 
 var returning_to_main_menu = false
+var single_player = true
 
 # Begin at main menu
 func _ready():
+	"""
+	if single_player:
+		$LeftSide/Viewport/Game/Water/RightSide/Player.set_process(false)
+		$LeftSide.rect_size.x = 1024
+		$LeftSide/Viewport.size.x = 1024
+		$RightSide.visible = false
+		$LeftSide/Viewport/Camera2D.offset.x = 256
+	"""
 	get_tree().paused = true
 	$MainMenu/MarginContainer/VBoxContainer/PlayButton.grab_focus()
 	$RightSide/Viewport.world_2d = $LeftSide/Viewport.world_2d
@@ -34,6 +43,7 @@ func _go_to_settings():
 # Return to previous menu
 func _return_from_settings():
 	if $PauseMenu.visible:
+		$PauseMenu.ignore_back = true
 		$PauseMenu/MarginContainer.visible = true
 		$PauseMenu/MarginContainer/VBoxContainer/SettingsButton.grab_focus()
 	else:
@@ -42,6 +52,8 @@ func _return_from_settings():
 	
 # Start outro transition
 func _return_to_main_menu():
+	$InGameMusic.stream_paused = false
+	$GameMusicFader.play("fade_out")
 	returning_to_main_menu = true
 	$Countdown.visible = false
 	$AnimationPlayer.playback_active = true
@@ -51,9 +63,11 @@ func _return_to_main_menu():
 # Game has resumed
 func _on_continue_game():
 	$AnimationPlayer.playback_active = true
+	$InGameMusic.stream_paused = false
 
 # Show pause menu
 func _on_Game_paused():
+	$InGameMusic.stream_paused = true
 	$PauseMenu.visible = true
 	$PauseMenu.ignore_pause = true
 	$AnimationPlayer.playback_active = false
@@ -61,7 +75,10 @@ func _on_Game_paused():
 
 func _on_Game_finished():
 	$Summary.visible = true
+	$Summary.game_finished($LeftSide/Viewport/Game/Water/LeftSide/Player.fish_caught,
+		$LeftSide/Viewport/Game/Water/RightSide/Player.fish_caught)
 	$Summary/AnimationPlayer.play("scroll_in")
+	$GameMusicFader.play("fade_out")
 
 # Show mainmenu when doing outro
 func intro_start():
@@ -91,4 +108,9 @@ func _on_Summary_play_again():
 	$LeftSide/Viewport/Game.reset()
 	$Clock/Label.text = str(int($LeftSide/Viewport/Game/GameTimer.wait_time))
 	$AnimationPlayer.play("countdown")
+	
+func play_slap():
+	if returning_to_main_menu:
+		return
+	$SlapSFX.play()
 	
