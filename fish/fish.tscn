@@ -123,7 +123,7 @@ script = ExtResource( 2 )
 __meta__ = {
 "_edit_group_": true
 }
-TEXTURE_SIZE = Vector2( 20, 10 )
+TEXTURE_SIZE = Vector2( 16, 16 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 modulate = Color( 0.941176, 0.941176, 0.941176, 1 )
@@ -134,7 +134,6 @@ shape = SubResource( 1 )
 [node name="ShadowSprite" type="AnimatedSprite" parent="."]
 modulate = Color( 1, 1, 1, 0 )
 frames = SubResource( 4 )
-frame = 1
 playing = true
 
 [node name="DirectionTimer" type="Timer" parent="."]
@@ -142,7 +141,7 @@ wait_time = 4.0
 autostart = true
 
 [node name="ButtonPopupTimer" type="Timer" parent="."]
-wait_time = 2.5
+wait_time = 2.0
 one_shot = true
 
 [node name="Button" type="Sprite" parent="."]
@@ -181,7 +180,6 @@ anims/fade_out = SubResource( 7 )
 [node name="FishSprite" type="AnimatedSprite" parent="."]
 visible = false
 frames = SubResource( 10 )
-frame = 1
 playing = true
 offset = Vector2( -15, 0 )
 [connection signal="timeout" from="DirectionTimer" to="." method="_on_DirectionTimer_timeout"]

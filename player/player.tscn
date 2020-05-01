@@ -351,7 +351,7 @@ tracks/4/keys = {
 "times": PoolRealArray( 0, 1, 2 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 1,
-"values": [ Vector2( 41, 66.159 ), Vector2( 41, 59.856 ), Vector2( 27.0333, -128.327 ) ]
+"values": [ Vector2( 41, 60 ), Vector2( 41, 60 ), Vector2( 27.0333, -128.327 ) ]
 }
 tracks/5/type = "value"
 tracks/5/path = NodePath("HookLine:points")
@@ -363,7 +363,7 @@ tracks/5/keys = {
 "times": PoolRealArray( 0, 1, 2 ),
 "transitions": PoolRealArray( 1, 1, 1 ),
 "update": 0,
-"values": [ PoolVector2Array( 41.5944, 74.5545, 42.2246, 167.201 ), PoolVector2Array( 40.8975, 69.2079, 40.4574, 74.4893 ), PoolVector2Array( 40.8975, 69.2079, 40.4574, 74.4893 ) ]
+"values": [ PoolVector2Array( 40.9886, 68.7742, 42.2246, 167.201 ), PoolVector2Array( 40.8975, 69.2079, 40.4574, 74.4893 ), PoolVector2Array( 40.8975, 69.2079, 40.4574, 74.4893 ) ]
 }
 tracks/6/type = "value"
 tracks/6/path = NodePath("SplashAnimation:playing")
@@ -894,9 +894,10 @@ position = Vector2( 502.437, 301.814 )
 texture = ExtResource( 1 )
 offset = Vector2( 0, -16 )
 region_enabled = true
-region_rect = Rect2( 0, 0, 128, 160 )
+region_rect = Rect2( 128, 0, 128, 160 )
 script = ExtResource( 2 )
 side = "left"
+line_cast = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 autoplay = "idle"
@@ -908,28 +909,29 @@ anims/idle_fishing = SubResource( 5 )
 anims/reeling = SubResource( 6 )
 
 [node name="FishingLine" type="Line2D" parent="."]
-points = PoolVector2Array( 48.3458, -10.2988, 47.791, 21.0462 )
+points = PoolVector2Array( 41.9042, -5.25854, 41.1689, 52.2385 )
 width = 1.0
 default_color = Color( 1, 1, 1, 1 )
 
 [node name="RodTip" type="Position2D" parent="."]
-position = Vector2( 48.5507, -10.0755 )
+position = Vector2( 42.8429, 4.66969 )
 
 [node name="BobberStart" type="Position2D" parent="."]
-position = Vector2( 93.9335, 66.5895 )
+position = Vector2( 93.9335, 61.5895 )
 
 [node name="Hook" parent="." instance=ExtResource( 4 )]
-position = Vector2( 48.3594, 40.5055 )
-rotation = 0.00014782
+visible = false
+position = Vector2( 23.158, -139.042 )
+rotation = 2.85204
+in_water = true
 
 [node name="HookLine" type="Line2D" parent="."]
-visible = false
-points = PoolVector2Array( 41.5944, 74.5545, 42.2246, 167.201 )
+points = PoolVector2Array( 40.8975, 69.2079, 40.4574, 74.4893 )
 width = 1.0
 default_color = Color( 1, 1, 1, 0.239216 )
 
 [node name="Bobber" type="Sprite" parent="."]
-position = Vector2( 47.7581, 29.037 )
+position = Vector2( 41, 60 )
 scale = Vector2( 0.5, 0.5 )
 texture = ExtResource( 3 )
 
@@ -943,10 +945,10 @@ position = Vector2( 0, 80.3509 )
 shape = SubResource( 7 )
 
 [node name="FishShadow" type="AnimatedSprite" parent="."]
-visible = false
-position = Vector2( 41, 168.433 )
+position = Vector2( 41, 70.247 )
 rotation = -1.5708
 frames = SubResource( 10 )
+frame = 1
 playing = true
 offset = Vector2( -8, 0 )
 
@@ -955,7 +957,6 @@ visible = false
 position = Vector2( 21.3176, -140.402 )
 rotation = 1.0332
 frames = SubResource( 13 )
-frame = 1
 playing = true
 offset = Vector2( -16, 0 )
 
@@ -963,7 +964,7 @@ offset = Vector2( -16, 0 )
 visible = false
 position = Vector2( 43.7076, 52.0899 )
 frames = SubResource( 21 )
-frame = 2
+frame = 3
 speed_scale = 4.0
 
 [node name="ReelingSFX" type="AudioStreamPlayer" parent="."]

@@ -15,9 +15,9 @@ func _physics_process(_delta):
 
 func _on_Hook_area_entered(area):
 	if visible and area.is_in_group("fish"):
+		area.call_deferred("hooked")
 		emit_signal("fish_hooked", area)
 		hooked_fish = area
-		area.hooked()
 		visible = false
 		
 func release():

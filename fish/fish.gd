@@ -8,6 +8,8 @@ export (int) var SPEED = 50
 export (int) var RUN_AWAY_SPEED = 75
 export (int) var POINTS = 1000
 export (Vector2) var TEXTURE_SIZE
+export (float) var FIRST_BUTTON_WAIT = 0.5
+export (float) var NORMAL_BUTTON_WAIT = 2.0
 
 const VERTICAL_MAX = 0.45  # Vertical movement will be in range (-VM, VM)
 const BUTTONS = ["AButton", "BButton", "XButton", "YButton"]
@@ -16,11 +18,12 @@ const ANGLE_RANGE = PI / 3
 const INDICATOR_RADIUS = 40
 const INDICATOR_COLOR = Color(1.0, 0.0, 0.0, 0.5)
 
+
 var on_hook = false
 var shown_button
 var velocity = Vector2(1, 0)
 var combo_angle = [0, 0]
-
+var normal_button_wait
 
 # Start with a random velocity
 func _ready():
@@ -97,7 +100,7 @@ func random_velocity():
 
 func hooked():
 	on_hook = true
-	$ButtonPopupTimer.start()
+	$ButtonPopupTimer.start(FIRST_BUTTON_WAIT)
 	$DirectionTimer.stop()
 	velocity.y = 0
 	if side == "left":
@@ -137,7 +140,7 @@ func test_combination(button, angle):
 	if button == shown_button and angle_in_range(angle):
 		get_node(shown_button).visible = false
 		shown_button = null
-		$ButtonPopupTimer.start()
+		$ButtonPopupTimer.start(NORMAL_BUTTON_WAIT)
 		$Button.visible = false
 		$AnimationPlayer.stop()
 		update()
