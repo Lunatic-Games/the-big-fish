@@ -1,20 +1,11 @@
 extends Node2D
 
 var returning_to_main_menu = false
-var single_player = true
 
 # Begin at main menu
 func _ready():
-	"""
-	if single_player:
-		$LeftSide/Viewport/Game/Water/RightSide/Player.set_process(false)
-		$LeftSide.rect_size.x = 1024
-		$LeftSide/Viewport.size.x = 1024
-		$RightSide.visible = false
-		$LeftSide/Viewport/Camera2D.offset.x = 256
-	"""
 	get_tree().paused = true
-	$MainMenu/MarginContainer/VBoxContainer/PlayButton.grab_focus()
+	$MainMenu/MarginContainer/VBoxContainer/SinglePlayerButton.grab_focus()
 	$RightSide/Viewport.world_2d = $LeftSide/Viewport.world_2d
 	#Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 
@@ -32,7 +23,11 @@ func _process(_delta):
 
 # Start intro transition
 func _on_play_game():
-	$AnimationPlayer.play("intro", 0, 1)
+	if $MainMenu.single_player:
+		$AnimationPlayer.play("intro_single", 0, 1)
+		$LeftSide/Viewport/Game/Water/RightSide/Player.set_process(false)
+	else:
+		$AnimationPlayer.play("intro", 0, 1)
 	$AnimationPlayer.queue("countdown")
 
 # Show settings
@@ -58,7 +53,10 @@ func _return_to_main_menu():
 	$Countdown.visible = false
 	$AnimationPlayer.playback_active = true
 	get_tree().paused = true
-	$AnimationPlayer.play("intro", 0, -2, true)
+	if $MainMenu.single_player:
+		$AnimationPlayer.play("intro_single", 0, -2, true)
+	else:
+		$AnimationPlayer.play("intro", 0, -2, true)
 
 # Game has resumed
 func _on_continue_game():
@@ -85,7 +83,7 @@ func intro_start():
 	if returning_to_main_menu:
 		returning_to_main_menu = false
 		$MainMenu.visible = true
-		$MainMenu/MarginContainer/VBoxContainer/PlayButton.grab_focus()
+		$MainMenu/MarginContainer/VBoxContainer/SinglePlayerButton.grab_focus()
 		$MainMenu/AnimationPlayer.play("fade_in")
 		$LeftSide/Viewport/Game.reset()
 	else:

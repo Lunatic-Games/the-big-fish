@@ -1,4 +1,4 @@
-[gd_scene load_steps=23 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://game/game.tscn" type="PackedScene" id=1]
 [ext_resource path="res://core/core.gd" type="Script" id=2]
@@ -313,6 +313,138 @@ tracks/10/keys = {
 "values": [ 0.0, -20.0, -30.0, -80.0 ]
 }
 
+[sub_resource type="Animation" id=8]
+resource_name = "intro_single"
+length = 6.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("LeftSide/Viewport/Camera2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 4, 4.9, 6.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -256, -150 ), Vector2( -256, 512 ), Vector2( -256, 512 ), Vector2( -768, 512 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("RightSide/Viewport/Camera2D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 4, 4.9, 6.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 256, -150 ), Vector2( 256, 512 ), Vector2( 256, 512 ), Vector2( -256, 512 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("LeftSide/Viewport/Game/MountainsLeft:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 4.9, 6.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -384, -18 ), Vector2( -384, -18 ), Vector2( -640, -18 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("LeftSide/Viewport/Game/MountainsRight:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 4.9, 6.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 384, -18 ), Vector2( 384, -18 ), Vector2( 124, -18 ) ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("LeftSide/Viewport/Game/ForestLeft:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 4, 4.9, 6.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -448, 200 ), Vector2( -448, 120 ), Vector2( -448, 120 ), Vector2( -576, 120 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("LeftSide/Viewport/Game/ForestRight:position")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 0, 4, 4.9, 6.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 448, 200 ), Vector2( 448, 120 ), Vector2( 448, 120 ), Vector2( 320, 120 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("LeftSide/Viewport/Game/Water:position")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 4, 6.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 600 ), Vector2( 0, 520 ), Vector2( 0, 520 ) ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("Clock:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 4.2, 4.6 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 1,
+"values": [ false, true ]
+}
+tracks/8/type = "method"
+tracks/8/path = NodePath(".")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 4.6, 6.5 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"values": [ {
+"args": [  ],
+"method": "intro_start"
+}, {
+"args": [  ],
+"method": "play_slap"
+}, {
+"args": [  ],
+"method": "intro_end"
+} ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("MainMenuMusic:volume_db")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 0, 3.3, 3.7, 4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ 0.0, -20.0, -30.0, -80.0 ]
+}
+
 [sub_resource type="Animation" id=7]
 resource_name = "fade_out"
 length = 2.0
@@ -471,6 +603,7 @@ autoplay = "fade_in"
 anims/countdown = SubResource( 3 )
 anims/fade_in = SubResource( 4 )
 anims/intro = SubResource( 5 )
+anims/intro_single = SubResource( 8 )
 
 [node name="BlackRect" type="ColorRect" parent="."]
 anchor_right = 1.0

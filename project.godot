@@ -29,7 +29,6 @@ shapes/collision/shape_color=Color( 0.701961, 0, 0, 0.501961 )
 [display]
 
 window/size/height=576
-window/size/fullscreen=true
 window/stretch/mode="2d"
 window/stretch/aspect="keep"
 
